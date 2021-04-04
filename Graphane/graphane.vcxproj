@@ -141,11 +141,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="csv_graph_reader.cpp" />
+    <ClCompile Include="dijkstra.cpp" />
+    <ClCompile Include="edge.cpp" />
     <ClCompile Include="graph.cpp" />
     <ClCompile Include="graphane.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="csv_graph_reader.h" />
+    <ClInclude Include="dijkstra.h" />
     <ClInclude Include="edge.h" />
     <ClInclude Include="graph.h" />
     <ClInclude Include="node.h" />
