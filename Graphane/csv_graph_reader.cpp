@@ -5,8 +5,7 @@
 #include <iostream>
 
 const char FileSeparator = ';';
-const char Connected = '1';
-const char Empty = '0';
+const std::string Empty = "0";
 const int StartingChar = 'A';
 const int EndingChar = 'Z';
 
@@ -20,45 +19,52 @@ Graph CsvGraphReader::ReadGraph()
 	try
 	{
 		std::ifstream file = GetFileStream(m_filename);
-		std::vector<Edge> edges = CreateEdges(file);
+		std::vector<Node> nodes = CreateNodes(file);
 
-		int node_index = 0;
-		std::string line;
-		char n_value;
 		Graph graph;
+		graph.AddNodes(nodes);
+
+		char n_value;
+		int line_index = 0;
+		int edge_index = 0;
+		std::string line;
 
 		while (std::getline(file, line))
 		{
-			std::string label = std::to_string(node_index);
-			Node node(label);
-			Node& node_ref = std::ref(node);
-
-			std::stringstream sstream(line);
 			int col_index = 0;
+			std::stringstream sstream(line), next_value;
+			Node* node_a = graph.GetNodeAt(line_index);
 
 			while (sstream >> n_value)
 			{
-				if (sstream.peek() == FileSeparator)
+				if (n_value != FileSeparator)
 				{
-					sstream.ignore();
+					next_value << n_value;
+					continue;
 				}
 
-				if (n_value == Connected)
+				if (next_value.str() == Empty)
 				{
-					edges.at(col_index).AddNode(node_ref);
+					col_index++;
+					next_value.str(std::string());
+
+					continue;
 				}
 
+				Node* node_b = graph.GetNodeAt(col_index);
+
+				std::string edge_label = std::to_string(edge_index);
+				int edge_value = std::stoi(next_value.str());
+
+				Edge edge(edge_label, edge_value, node_a, node_b);
+				graph.AddEdge(edge);
+
+				next_value.str(std::string());
 				col_index++;
+				edge_index++;
 			}
 
-			graph.AddNode(node_ref);
-			node_index++;
-		}
-
-		for (Edge edge : edges)
-		{
-			Edge edge_ref = std::ref(edge);
-			graph.AddEdge(edge_ref);
+			line_index++;
 		}
 
 		file.close();
@@ -88,37 +94,52 @@ std::ifstream CsvGraphReader::GetFileStream(std::string filename)
 	return file;
 }
 
-std::vector<char> CsvGraphReader::GetFileHeaders(std::ifstream &file)
+std::vector<std::string> CsvGraphReader::ReadHeader(std::ifstream &file)
 {
 	std::string line;
-	std::vector<char> colnames;
+	std::vector<std::string> colnames;
 	char n_value;
 
 	if (file.good())
 	{
 		std::getline(file, line);
-		std::stringstream sstream(line);
+		std::stringstream sstream(line), next_value;
 
 		while (sstream >> n_value)
 		{
-			if (n_value == FileSeparator)
+			if (n_value != FileSeparator)
 			{
+				next_value << n_value;
 				continue;
 			}
 
-			colnames.push_back(n_value);
+			colnames.push_back(next_value.str());
+			next_value.str(std::string());
 		}
+
+		// Add last col
+		colnames.push_back(next_value.str());
 	}
 
-	return colnames;
+	try 
+	{
+		// Header check
+		std::stoi(colnames[0]);
+		return std::vector<std::string>();
+	}
+	catch (std::invalid_argument)
+	{
+		// If breaks on str to int cast then there are headers
+		return colnames;
+	}
 }
 
-std::vector<Edge> CsvGraphReader::CreateEdges(std::ifstream& file)
+std::vector<Node> CsvGraphReader::CreateNodes(std::ifstream& file)
 {
-	std::vector<Edge> edges;
-	std::vector<char> headers = GetFileHeaders(file);
+	std::vector<Node> nodes;
+	std::vector<std::string> headers = ReadHeader(file);
 
-	if (headers.size() == 0 || headers[0] == Connected || headers[0] == Empty)
+	if (headers.size() == 0)
 	{
 		for (int i = 0; i < headers.size(); i++)
 		{
@@ -128,22 +149,20 @@ std::vector<Edge> CsvGraphReader::CreateEdges(std::ifstream& file)
 				? GenerateLabel(c_value)
 				: std::string(1, c_value);
 
-			Edge edge(label);
-			edges.push_back(edge);
+			Node node(label);
+			nodes.push_back(node);
 		}
 	}
 	else
 	{
-		for (char header : headers)
+		for (std::string label : headers)
 		{
-			std::string label(1, header);
-			Edge edge(label);
-
-			edges.push_back(edge);
+			Node node(label);
+			nodes.push_back(node);
 		}
 	}
 
-	return edges;
+	return nodes;
 }
 
 std::string CsvGraphReader::GenerateLabel(int value)

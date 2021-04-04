@@ -9,10 +9,11 @@ class CsvGraphReader
 {
 private:
 	std::string m_filename;
+
 	std::ifstream GetFileStream(std::string filename);
-	std::vector<char> GetFileHeaders(std::ifstream &file);
-	std::vector<Edge> CreateEdges(std::ifstream& file);
+	std::vector<Node> CreateNodes(std::ifstream& file);
 	std::string GenerateLabel(int value);
+	std::vector<std::string> ReadHeader(std::ifstream& file);
 
 public:
 	CsvGraphReader(std::string filename);
