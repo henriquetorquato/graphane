@@ -1,5 +1,8 @@
 #include "dijkstra.h";
+#include "string_utils.h"
 #include <tuple>
+#include <sstream>
+#include <iostream>
 
 struct NodeWeight
 {
@@ -29,19 +32,74 @@ std::tuple<NodeWeight, int> GetSmallestWeight(std::vector<NodeWeight> weights)
 	return { smallest, smallest_index };
 }
 
-bool IsNodeProcessed(Node* node, std::vector<NodeWeight> processed_nodes)
+int FindNode(std::string node_label, std::vector<NodeWeight> nodes)
 {
+	int index = 0;
 	std::vector<NodeWeight>::iterator node_i;
-	for (node_i = processed_nodes.begin(); node_i != processed_nodes.end(); node_i++)
+
+	for (node_i = nodes.begin(); node_i != nodes.end(); node_i++, index++)
 	{
-		std::string processed_node_label = (*node_i).node;
-		if (node->GetLabel() == processed_node_label)
+		std::string node_weight_label = (*node_i).node;
+		if (node_label == node_weight_label)
 		{
-			return true;
+			return index;
 		}
 	}
 
-	return false;
+	return -1;
+}
+
+bool ContainsNodeLabel(std::string node_label, std::vector<NodeWeight> nodes)
+{
+	return FindNode(node_label, nodes) > -1;
+}
+
+void DisplayShortestPath(std::string origin_label, std::vector<NodeWeight> result)
+{
+	std::vector<NodeWeight>::iterator node_i;
+	for (node_i = result.begin(); node_i != result.end(); node_i++)
+	{
+		NodeWeight node_weight = *node_i;
+
+		// Skip origin path
+		if (node_weight.origin == std::string())
+		{
+			continue;
+		}
+
+		// Save destination information
+		std::string detination_label = node_weight.node;
+		int destination_weight = node_weight.weight;
+
+		std::vector<std::string> path;
+		bool pathComplete = false;
+
+		do
+		{
+			path.push_back(node_weight.node);
+			
+			if (node_weight.origin == std::string())
+			{
+				pathComplete = true;
+			}
+			else
+			{
+				// Follow path
+				int next_index = FindNode(node_weight.origin, result);
+				node_weight = result.at(next_index);
+			}
+
+		} while (!pathComplete);
+
+		std::reverse(path.begin(), path.end());
+		std::string path_out = ToString(path, DEFAULT_LIST_SEPARATOR);
+
+		std::cout
+			<< origin_label << " -> " << detination_label
+			<< " | Path: " << path_out
+			<< " | Weight: " << destination_weight
+			<< std::endl;
+	}
 }
 
 void Dijkstra::FindShortestPath(std::string origin_label)
@@ -68,7 +126,7 @@ void Dijkstra::FindShortestPath(std::string origin_label)
 			Edge edge = *edges_i;
 			Node* next_node = edge.GetNodeNeighbour(current_weight.node);
 
-			if (IsNodeProcessed(next_node, result))
+			if (ContainsNodeLabel(next_node->GetLabel(), result))
 			{
 				continue;
 			}
@@ -79,8 +137,14 @@ void Dijkstra::FindShortestPath(std::string origin_label)
 			weights.push_back(next_weight);
 		}
 
-		result.push_back(current_weight);
+		if (!ContainsNodeLabel(current_weight.node, result))
+		{
+			result.push_back(current_weight);
+		}
+
 		weights.erase(weights.begin() + weight_index);
 
 	} while (!weights.empty());
+
+	DisplayShortestPath(origin_label, result);
 }

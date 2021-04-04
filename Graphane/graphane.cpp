@@ -3,7 +3,7 @@
 #include <iostream>
 #include <Windows.h>
 
-const std::string TARGET_FILE = "test.csv";
+const std::string TARGET_FILE = "test2.csv";
 const std::string DIRECTORY_SEPARATOR = "\\";
 
 // https://gist.github.com/karolisjan/f9b8ac3ae2d41ec0ce70f2feac6bdfaf
@@ -26,5 +26,5 @@ int main()
     Graph graph = reader.ReadGraph();
 
 	Dijkstra dijkstra(graph);
-	dijkstra.FindShortestPath("A");
+	dijkstra.FindShortestPath("G");
 }

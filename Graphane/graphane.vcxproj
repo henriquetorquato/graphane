@@ -145,6 +145,7 @@
     <ClCompile Include="edge.cpp" />
     <ClCompile Include="graph.cpp" />
     <ClCompile Include="graphane.cpp" />
+    <ClCompile Include="string_utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="csv_graph_reader.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="edge.h" />
     <ClInclude Include="graph.h" />
     <ClInclude Include="node.h" />
+    <ClInclude Include="string_utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
