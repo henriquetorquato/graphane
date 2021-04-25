@@ -2,6 +2,9 @@
 #include <vector>
 #include <string>
 
-const std::string DEFAULT_LIST_SEPARATOR = ", ";
+using namespace std;
 
-std::string ToString(std::vector<std::string> items, std::string separator);
+const string DEFAULT_LIST_SEPARATOR = ", ";
+
+string ToString(vector<string> items, string separator);
+int FindString(vector<string> items, string item);

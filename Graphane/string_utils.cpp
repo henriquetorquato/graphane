@@ -2,11 +2,13 @@
 #include <vector>
 #include <sstream>
 
-std::string ToString(std::vector<std::string> items, std::string separator)
+using namespace std;
+
+string ToString(vector<string> items, string separator)
 {
 	int index = 0;
-	std::stringstream s_stream;
-	std::vector<std::string>::iterator item_i;
+	stringstream s_stream;
+	vector<string>::iterator item_i;
 
 	for (item_i = items.begin(); item_i != items.end(); item_i++, index++)
 	{
@@ -19,4 +21,22 @@ std::string ToString(std::vector<std::string> items, std::string separator)
 	}
 
 	return s_stream.str();
+}
+
+int FindString(vector<string> items, string item)
+{
+	int index = 0;
+	vector<string>::iterator items_i;
+
+	for (items_i = items.begin(); items_i != items.end(); items_i++)
+	{
+		if (item == *items_i)
+		{
+			return index;
+		}
+
+		index++;
+	}
+
+	return -1;
 }
