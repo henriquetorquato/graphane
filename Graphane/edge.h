@@ -3,16 +3,18 @@
 #include "node.h"
 #include <vector>
 
+using namespace std;
+
 class Edge
 {
 private:
 	int m_value;
-	std::string m_label;
+	string m_label;
 	Node* m_node_a;
 	Node* m_node_b;
 
 public:
-	Edge(std::string label, int value, Node* node_a, Node* node_b)
+	Edge(string label, int value, Node* node_a, Node* node_b)
 	{
 		m_label = label;
 		m_value = value;
@@ -26,11 +28,13 @@ public:
 			&& (edge_ref.m_node_b == m_node_a || edge_ref.m_node_b == m_node_b);
 	}
 
-	std::string GetLabel() { return m_label; }
+	string GetLabel() { return m_label; }
 	int GetValue() { return m_value; }
 	Node* GetNodeA() { return m_node_a; }
 	Node* GetNodeB() { return m_node_b; }
 
-	bool ContainsNode(std::string label);
-	Node* GetNodeNeighbour(std::string label);
+	bool ContainsNode(string label);
+	Node* GetNodeNeighbour(string label);
+
+	bool SignatureMatch(Edge edge);
 };

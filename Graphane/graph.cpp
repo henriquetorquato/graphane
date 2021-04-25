@@ -1,20 +1,22 @@
 #include "graph.h"
 #include <stdexcept>
 
+using namespace std;
+
 void Graph::AddNode(Node node)
 {
 	if (ContainsNode(node))
 	{
-		throw std::runtime_error("Node already exists.");
+		throw runtime_error("Node already exists.");
 		return;
 	}
 
 	nodes.push_back(node);
 }
 
-void Graph::AddNodes(std::vector<Node> nodes)
+void Graph::AddNodes(vector<Node> nodes)
 {
-	std::vector<Node>::iterator node_i;
+	vector<Node>::iterator node_i;
 
 	for (node_i = nodes.begin(); node_i != nodes.end(); node_i++)
 	{
@@ -22,12 +24,22 @@ void Graph::AddNodes(std::vector<Node> nodes)
 	}
 }
 
-Node Graph::GetNode(std::string label)
+void Graph::AddEdges(vector<Edge> edges)
+{
+	vector<Edge>::iterator edge_i;
+
+	for (edge_i = edges.begin(); edge_i != edges.end(); edge_i++)
+	{
+		AddEdge(*edge_i);
+	}
+}
+
+Node Graph::GetNode(string label)
 {
 	int index(FindNode(label));
 	if (index == -1)
 	{
-		throw std::runtime_error("Node not found");
+		throw runtime_error("Node not found");
 	}
 
 	return nodes.at(index);
@@ -38,10 +50,10 @@ Node* Graph::GetNodeAt(int index)
 	return &nodes.at(index);
 }
 
-std::vector<std::string> Graph::GetNodeLabels()
+vector<string> Graph::GetNodeLabels()
 {
-	std::vector<std::string> result;
-	std::vector<Node>::iterator node_i;
+	vector<string> result;
+	vector<Node>::iterator node_i;
 
 	for (node_i = nodes.begin(); node_i != nodes.end(); node_i++)
 	{
@@ -61,23 +73,23 @@ void Graph::AddEdge(Edge edge)
 
 	if (!ContainsNodeLabel(edge.GetNodeA()->GetLabel()))
 	{
-		throw std::runtime_error("Node A was not found");
+		throw runtime_error("Node A was not found");
 		return;
 	}
 
 	if (!ContainsNodeLabel(edge.GetNodeB()->GetLabel()))
 	{
-		throw std::runtime_error("Node B was not found");
+		throw runtime_error("Node B was not found");
 		return;
 	}
 
 	edges.push_back(edge);
 }
 
-std::vector<Edge> Graph::GetEdges(std::string node_label)
+vector<Edge> Graph::GetEdges(string node_label)
 {
-	std::vector<Edge> result;
-	std::vector<Edge>::iterator edge_i;
+	vector<Edge> result;
+	vector<Edge>::iterator edge_i;
 
 	for (edge_i = edges.begin(); edge_i != edges.end(); edge_i++)
 	{
@@ -91,10 +103,10 @@ std::vector<Edge> Graph::GetEdges(std::string node_label)
 	return result;
 }
 
-int Graph::FindNode(std::string label)
+int Graph::FindNode(string label)
 {
 	int index = 0;
-	std::vector<Node>::iterator node_i;
+	vector<Node>::iterator node_i;
 
 	for (node_i = nodes.begin(); node_i != nodes.end(); node_i++)
 	{
@@ -112,15 +124,15 @@ int Graph::FindNode(std::string label)
 
 bool Graph::ContainsNode(Node node)
 {
-	return std::find(nodes.begin(), nodes.end(), node) != nodes.end();
+	return find(nodes.begin(), nodes.end(), node) != nodes.end();
 }
 
-bool Graph::ContainsNodeLabel(std::string label)
+bool Graph::ContainsNodeLabel(string label)
 {
-	std::vector<Node>::iterator node_i;
+	vector<Node>::iterator node_i;
 	for (node_i = nodes.begin(); node_i != nodes.end(); node_i++)
 	{
-		std::string current_label = (*node_i).GetLabel();
+		string current_label = (*node_i).GetLabel();
 		if (current_label == label)
 		{
 			return true;
@@ -132,5 +144,18 @@ bool Graph::ContainsNodeLabel(std::string label)
 
 bool Graph::ContainsEdge(Edge edge)
 {
-	return std::find(edges.begin(), edges.end(), edge) != edges.end();
+	vector<Edge>::iterator edge_i;
+
+	for (edge_i = edges.begin(); edge_i != edges.end(); edge_i++)
+	{
+		Edge current_edge = *edge_i;
+
+		// If they share same nodes or have the same label
+		if (current_edge.SignatureMatch(edge) || current_edge.GetLabel() == edge.GetLabel())
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
