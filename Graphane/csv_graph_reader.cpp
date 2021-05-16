@@ -33,15 +33,26 @@ Graph CsvGraphReader::ReadGraph()
 		while (getline(file, line))
 		{
 			int col_index = 0;
+			int char_index = 0;
+
 			stringstream sstream(line), next_value;
 			Node* node_a = graph.GetNodeAt(line_index);
 
 			while (sstream >> n_value)
 			{
+				char_index++;
 				if (n_value != FileSeparator)
 				{
 					next_value << n_value;
-					continue;
+
+					/*
+					* The last character does not have the separator,
+					* this "if" is so that this last character is processed.
+					*/
+					if (char_index < line.length() - 1)
+					{
+						continue;
+					}
 				}
 
 				if (next_value.str() == Empty)
