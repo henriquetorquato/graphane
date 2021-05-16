@@ -5,6 +5,11 @@
 
 using namespace std;
 
+enum class EdgeType {
+	Directional,
+	Bidirectional
+};
+
 class Edge
 {
 private:
@@ -12,6 +17,7 @@ private:
 	string m_label;
 	Node* m_node_a;
 	Node* m_node_b;
+	EdgeType m_type;
 
 public:
 	Edge(string label, int value, Node* node_a, Node* node_b)
@@ -20,6 +26,7 @@ public:
 		m_value = value;
 		m_node_a = node_a;
 		m_node_b = node_b;
+		m_type = EdgeType::Directional;
 	}
 
 	bool operator == (const Edge& edge_ref) const
@@ -32,6 +39,7 @@ public:
 	int GetValue() { return m_value; }
 	Node* GetNodeA() { return m_node_a; }
 	Node* GetNodeB() { return m_node_b; }
+	void SetType(EdgeType type) { m_type = type; }
 
 	bool ContainsNode(string label);
 	Node* GetNodeNeighbour(string label);

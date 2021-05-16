@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <optional>
 #include "node.h"
 #include "edge.h"
 
@@ -12,19 +13,25 @@ private:
 	vector<Edge> edges;
 	bool ContainsNode(Node node);
 	bool ContainsNodeLabel(string label);
-	bool ContainsEdge(Edge edge);
+	bool ContainsEdgeLabel(string label);
 
 public:
 	void AddNode(Node node);
-	void AddNodes(vector<Node> nodes);
-	Node GetNode(string label);
-	Node* GetNodeAt(int index);
-	vector<Node> GetNodes() { return nodes; }
-	vector<string> GetNodeLabels();
-	int FindNode(string label);
-
 	void AddEdge(Edge edge);
+
+	void AddNodes(vector<Node> nodes);
 	void AddEdges(vector<Edge> edges);
+
+	Node GetNode(string label);
+	vector<string> GetNodeLabels();
+
+	Node* GetNodeAt(int index);
+	Edge* GetEdgeAt(int index);
+
+	vector<Node> GetNodes() { return nodes; }
 	vector<Edge> GetEdges() { return edges; }
 	vector<Edge> GetEdges(string node_label);
+
+	optional<int> FindNode(Node node);
+	optional<int> FindEdge(Edge edge);
 };
