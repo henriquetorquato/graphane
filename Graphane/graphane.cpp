@@ -1,3 +1,6 @@
+// https://forums.codeguru.com/showthread.php?560037-RESOLVED-VS-2017-and-Windows-h-issue&s=682b843e305564fd7790fe152b9231bf&p=2216871#post2216871
+#define _HAS_STD_BYTE 0
+
 #include "csv_graph_reader.h"
 #include "dijkstra.h"
 #include "prim.h"
