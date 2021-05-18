@@ -5,8 +5,9 @@
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace GraphaneTests {
-	TEST_CLASS(DijkstraTest)
+namespace GraphaneTests
+{
+	TEST_CLASS(DijkstraTests)
 	{
 	private:
 		tuple<int, vector<string>> GetResult(string origin, string destination, vector<DijkstraResult> results)
