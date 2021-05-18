@@ -38,6 +38,20 @@ static void DisplayDijkstraShortestPaths(vector<DijkstraResult> shortestPaths)
 	}
 }
 
+static void DisplayPrimMinimumSpanningTree(vector<PrimResult> minimumSpanningTree)
+{
+	vector<string> edges;
+	vector<PrimResult>::iterator it;
+
+	for (it = minimumSpanningTree.begin(); it != minimumSpanningTree.end(); it++)
+	{
+		PrimResult result(*it);
+		edges.push_back(result.origin + result.destination);
+	}
+
+	cout << ToString(edges, DEFAULT_LIST_SEPARATOR) << endl;
+}
+
 int main()
 {
 	string path(GetExecutingPath());
@@ -58,6 +72,8 @@ int main()
 
 	// Prim
 	cout << "Minimum spanning tree (Prim):" << endl;
+
 	Prim prim(graph);
-	prim.FindMinimumSpanningTree();
+	vector<PrimResult> minimumSpanningTree = prim.FindMinimumSpanningTree();
+	DisplayPrimMinimumSpanningTree(minimumSpanningTree);
 }

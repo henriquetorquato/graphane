@@ -1,7 +1,6 @@
 #include "prim.h"
 #include "string_utils.h"
 #include <sstream>
-#include <time.h>
 #include <iostream>
 
 using namespace std;
@@ -113,25 +112,23 @@ void AddNodeAvailableEdges(Graph& graph, vector<EdgePath>& selected_edges, vecto
 	}
 }
 
-void DisplayMinimumSpanningTree(vector<EdgePath> selected_edges)
+vector<PrimResult> MapMinimumSpanningTree(vector<EdgePath> selected_edges)
 {
-	vector<string> edges;
+	vector<PrimResult> results;
 	vector<EdgePath>::iterator edge_i;
 
 	for (edge_i = selected_edges.begin(); edge_i != selected_edges.end(); edge_i++)
 	{
 		EdgePath edge = *edge_i;
-		edges.push_back(edge.origin + edge.destination);
+
+		results.push_back({ edge.origin, edge.destination, edge.label });
 	}
 
-	cout << ToString(edges, DEFAULT_LIST_SEPARATOR) << endl;
+	return results;
 }
 
-void Prim::FindMinimumSpanningTree()
+vector<PrimResult> Prim::FindMinimumSpanningTree()
 {
-	// Seed random number generator "rand()"
-	srand((int) time(NULL));
-
 	// The selected subgraph
 	vector<EdgePath> selected_edges;
 
@@ -165,5 +162,5 @@ void Prim::FindMinimumSpanningTree()
 
 	} while (!pending_nodes.empty());
 
-	DisplayMinimumSpanningTree(selected_edges);
+	return MapMinimumSpanningTree(selected_edges);
 }
