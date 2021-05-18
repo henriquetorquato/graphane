@@ -1,5 +1,4 @@
 #include "dijkstra.h"
-#include "string_utils.h"
 #include <tuple>
 #include <sstream>
 #include <iostream>
@@ -34,7 +33,7 @@ tuple<NodeWeight, int> GetSmallestWeight(vector<NodeWeight> weights)
 	return { smallest, smallest_index };
 }
 
-int FindNode(string node_label, vector<NodeWeight> nodes)
+int FindNodeIndex(string node_label, vector<NodeWeight> nodes)
 {
 	int index = 0;
 	vector<NodeWeight>::iterator node_i;
@@ -51,60 +50,79 @@ int FindNode(string node_label, vector<NodeWeight> nodes)
 	return -1;
 }
 
-bool ContainsNodeLabel(string node_label, vector<NodeWeight> nodes)
+NodeWeight FindNode(string node_label, vector<NodeWeight> nodes)
 {
-	return FindNode(node_label, nodes) > -1;
+	int node_index = FindNodeIndex(node_label, nodes);
+	
+	if (node_index == -1)
+	{
+		throw new runtime_error("Node not found on weight list");
+	}
+
+	return nodes.at(node_index);
 }
 
-void DisplayShortestPath(string origin_label, vector<NodeWeight> result)
+bool ContainsNodeLabel(string node_label, vector<NodeWeight> nodes)
 {
+	return FindNodeIndex(node_label, nodes) > -1;
+}
+
+DijkstraResult MapDijkstraResult(string origin_label, string destination_label, vector<NodeWeight> node_weights)
+{
+	vector<string> path;
+	bool pathComplete = false;
+
+	NodeWeight node_weight(FindNode(destination_label, node_weights));
+	int destination_weight = node_weight.weight;
+
+	do
+	{
+		path.push_back(node_weight.node);
+
+		if (node_weight.node == origin_label)
+		{
+			pathComplete = true;
+		}
+		else
+		{
+			// Follow path
+			node_weight = FindNode(node_weight.origin, node_weights);
+		}
+
+	} while (!pathComplete);
+
+	reverse(path.begin(), path.end());
+	return { origin_label, destination_label, path, destination_weight };
+}
+
+vector<DijkstraResult> MapDijkstraResults(string origin_label, string destination_label, vector<NodeWeight> node_weights)
+{
+	if (destination_label != string())
+	{
+		return { MapDijkstraResult(origin_label, destination_label, node_weights) };
+	}
+
+	vector<DijkstraResult> results;
 	vector<NodeWeight>::iterator node_i;
-	for (node_i = result.begin(); node_i != result.end(); node_i++)
+
+	for (node_i = node_weights.begin(); node_i != node_weights.end(); node_i++)
 	{
 		NodeWeight node_weight = *node_i;
 
 		// Skip origin path
-		if (node_weight.origin == string())
+		if (node_weight.node == origin_label)
 		{
 			continue;
 		}
-
-		// Save destination information
-		string detination_label = node_weight.node;
-		int destination_weight = node_weight.weight;
-
-		vector<string> path;
-		bool pathComplete = false;
-
-		do
-		{
-			path.push_back(node_weight.node);
-			
-			if (node_weight.origin == string())
-			{
-				pathComplete = true;
-			}
-			else
-			{
-				// Follow path
-				int next_index = FindNode(node_weight.origin, result);
-				node_weight = result.at(next_index);
-			}
-
-		} while (!pathComplete);
-
-		reverse(path.begin(), path.end());
-		string path_out = ToString(path, DEFAULT_LIST_SEPARATOR);
-
-		cout
-			<< origin_label << " -> " << detination_label
-			<< " | Path: " << path_out
-			<< " | Weight: " << destination_weight
-			<< endl;
+		
+		DijkstraResult result = MapDijkstraResult(origin_label, node_weight.node, node_weights);
+		results.push_back(result);
 	}
+
+	return results;
 }
 
-void Dijkstra::FindShortestPath(string origin_label)
+vector<DijkstraResult> Dijkstra::FindShortestPath(string origin_label, string destination_label)
 {
 	vector<NodeWeight> weights;
 	vector<NodeWeight> result;
@@ -115,6 +133,7 @@ void Dijkstra::FindShortestPath(string origin_label)
 
 	int weight_index;
 	NodeWeight current_weight;
+	bool destination_found = false;
 
 	do
 	{
@@ -142,11 +161,16 @@ void Dijkstra::FindShortestPath(string origin_label)
 		if (!ContainsNodeLabel(current_weight.node, result))
 		{
 			result.push_back(current_weight);
+
+			if (current_weight.node == destination_label)
+			{
+				destination_found = true;
+			}
 		}
 
 		weights.erase(weights.begin() + weight_index);
 
-	} while (!weights.empty());
+	} while (!weights.empty() || destination_found);
 
-	DisplayShortestPath(origin_label, result);
+	return MapDijkstraResults(origin_label, destination_label, result);
 }

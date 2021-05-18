@@ -1,5 +1,8 @@
 #pragma once
 #include "graph.h"
+#include "dijkstra_result.h"
+
+using namespace std;
 
 class Dijkstra
 {
@@ -12,5 +15,5 @@ public:
 		m_graph = graph;
 	}
 
-	void FindShortestPath(std::string origin_label);
+	vector<DijkstraResult> FindShortestPath(string origin_label, string destination_label = string());
 };

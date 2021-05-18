@@ -2,6 +2,7 @@
 #define _HAS_STD_BYTE 0
 
 #include "csv_graph_reader.h"
+#include "string_utils.h"
 #include "dijkstra.h"
 #include "prim.h"
 #include <iostream>
@@ -22,6 +23,21 @@ static string GetExecutingPath()
 	return string(buffer).substr(0, pos);
 }
 
+static void DisplayDijkstraShortestPaths(vector<DijkstraResult> shortestPaths)
+{
+	vector<DijkstraResult>::iterator it;
+	for (it = shortestPaths.begin(); it != shortestPaths.end(); it++)
+	{
+		DijkstraResult result(*it);
+
+		cout
+			<< result.origin << " -> " << result.destination
+			<< " | Path: " << ToString(result.path, DEFAULT_LIST_SEPARATOR)
+			<< " | Weight: " << result.weight
+			<< endl;
+	}
+}
+
 int main()
 {
 	string path(GetExecutingPath());
@@ -33,8 +49,10 @@ int main()
 
 	// Dijkstra
 	cout << "Shortest path from 'G' (Dijkstra):" << endl;
+
 	Dijkstra dijkstra(graph);
-	dijkstra.FindShortestPath("G");
+	vector<DijkstraResult> shortestPaths = dijkstra.FindShortestPath("G");
+	DisplayDijkstraShortestPaths(shortestPaths);
 
 	cout << "\n" << endl;
 
