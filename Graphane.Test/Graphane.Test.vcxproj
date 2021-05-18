@@ -103,7 +103,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)Graphane\Debug;$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>edge.obj;graph.obj;dijkstra.obj;string_utils.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>edge.obj;graph.obj;dijkstra.obj;prim.obj;string_utils.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -160,7 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="dijkstra_test.cpp" />
+    <ClCompile Include="dijkstra_tests.cpp" />
     <ClCompile Include="graph_utils.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -168,6 +168,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="prim_tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graph_utils.h" />

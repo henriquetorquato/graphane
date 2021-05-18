@@ -11,8 +11,13 @@
 #include "../Graphane/node.h"
 #include "../Graphane/edge.h"
 #include "../Graphane/graph.h"
+
 #include "../Graphane/dijkstra.h"
 #include "../Graphane/dijkstra_result.h"
+
+#include "../Graphane/prim.h"
+#include "../Graphane/prim_result.h"
+
 #include "../Graphane/string_utils.h"
 
 #endif //PCH_H
