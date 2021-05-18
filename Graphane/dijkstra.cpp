@@ -162,7 +162,8 @@ vector<DijkstraResult> Dijkstra::FindShortestPath(string origin_label, string de
 		{
 			result.push_back(current_weight);
 
-			if (current_weight.node == destination_label)
+			if (destination_label != string()
+				&& current_weight.node == destination_label)
 			{
 				destination_found = true;
 			}
@@ -170,7 +171,7 @@ vector<DijkstraResult> Dijkstra::FindShortestPath(string origin_label, string de
 
 		weights.erase(weights.begin() + weight_index);
 
-	} while (!weights.empty() || destination_found);
+	} while (!weights.empty() && !destination_found);
 
 	return MapDijkstraResults(origin_label, destination_label, result);
 }
