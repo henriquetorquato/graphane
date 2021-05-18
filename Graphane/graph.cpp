@@ -122,8 +122,8 @@ optional<int> Graph::FindNode(Node node)
 
 	for (node_i = nodes.begin(); node_i != nodes.end(); node_i++)
 	{
-		Node node = *node_i;
-		if (node.GetLabel() == node.GetLabel())
+		Node current_node = *node_i;
+		if (current_node.GetLabel() == node.GetLabel())
 		{
 			return distance(nodes.begin(), node_i);
 		}
