@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Graphane", "Graphane\graphane.vcxproj", "{499A5219-8181-47EA-9FC8-934D50A9D7C6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Graphane.Tests", "Graphane.Test\Graphane.Test.vcxproj", "{772F852A-83B1-494B-A6E8-23D920E0CE1E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{499A5219-8181-47EA-9FC8-934D50A9D7C6}.Release|x64.Build.0 = Release|x64
 		{499A5219-8181-47EA-9FC8-934D50A9D7C6}.Release|x86.ActiveCfg = Release|Win32
 		{499A5219-8181-47EA-9FC8-934D50A9D7C6}.Release|x86.Build.0 = Release|Win32
+		{772F852A-83B1-494B-A6E8-23D920E0CE1E}.Debug|x64.ActiveCfg = Debug|x64
+		{772F852A-83B1-494B-A6E8-23D920E0CE1E}.Debug|x64.Build.0 = Debug|x64
+		{772F852A-83B1-494B-A6E8-23D920E0CE1E}.Debug|x86.ActiveCfg = Debug|Win32
+		{772F852A-83B1-494B-A6E8-23D920E0CE1E}.Debug|x86.Build.0 = Debug|Win32
+		{772F852A-83B1-494B-A6E8-23D920E0CE1E}.Release|x64.ActiveCfg = Release|x64
+		{772F852A-83B1-494B-A6E8-23D920E0CE1E}.Release|x64.Build.0 = Release|x64
+		{772F852A-83B1-494B-A6E8-23D920E0CE1E}.Release|x86.ActiveCfg = Release|Win32
+		{772F852A-83B1-494B-A6E8-23D920E0CE1E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
