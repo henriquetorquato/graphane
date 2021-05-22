@@ -14,6 +14,11 @@ bool Edge::SignatureMatch(Edge edge)
 	return ContainsNode(edge.GetNodeA()) && ContainsNode(edge.GetNodeB());
 }
 
+bool Edge::IsBidirectional()
+{
+	return _type == EdgeType::Bidirectional;
+}
+
 string Edge::GetNeighbour(string label)
 {
 	string neighbor = _node_a == label ? _node_b

@@ -24,7 +24,14 @@ void Graph::InitializeMaps(vector<Node> nodes, vector<Edge> edges)
 		{
 			Edge edge = *edge_i;
 
-			if (edge.ContainsNode(node.GetLabel()))
+			/*
+			* The node is only path if it's the origin of a directional edge,
+			* or if the edge is bidirectional.
+			*/
+			bool isPath = edge.GetNodeA() == node.GetLabel()
+				|| (edge.ContainsNode(node.GetLabel()) && edge.IsBidirectional());
+
+			if (isPath)
 			{				
 				connected_edges.push_back(edge);
 			}
