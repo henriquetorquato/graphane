@@ -140,21 +140,21 @@ vector<DijkstraResult> Dijkstra::FindShortestPath(string origin_label, string de
 		tie(current_weight, weight_index) = GetSmallestWeight(weights);
 
 		vector<Edge>::iterator edges_i;
-		vector<Edge> edges = m_graph.GetEdges(current_weight.node);
+		vector<Edge> edges = _graph.GetConnectedEdges(current_weight.node);
 
 		for (edges_i = edges.begin(); edges_i != edges.end(); edges_i++)
 		{
 			Edge edge = *edges_i;
-			Node* next_node = edge.GetNodeNeighbour(current_weight.node);
+			string next_node = edge.GetNeighbour(current_weight.node);
 
-			if (ContainsNodeLabel(next_node->GetLabel(), result))
+			if (ContainsNodeLabel(next_node, result))
 			{
 				continue;
 			}
 
 			int weight = current_weight.weight + edge.GetValue();
 
-			NodeWeight next_weight = { next_node->GetLabel(), current_weight.node, weight };
+			NodeWeight next_weight = { next_node, current_weight.node, weight };
 			weights.push_back(next_weight);
 		}
 

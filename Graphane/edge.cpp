@@ -1,23 +1,29 @@
 #include "edge.h"
+#include <stdexcept>
 
 using namespace std;
 
 bool Edge::ContainsNode(string label)
 {
-	return m_node_a->GetLabel() == label
-		|| m_node_b->GetLabel() == label;
-}
-
-Node* Edge::GetNodeNeighbour(string label)
-{
-	return m_node_a->GetLabel() == label
-		? m_node_b
-		: m_node_a;
+	return _node_a == label || _node_b == label;
 }
 
 bool Edge::SignatureMatch(Edge edge)
 {
 	// If container both edge nodes
-	return ContainsNode(edge.GetNodeA()->GetLabel())
-		&& ContainsNode(edge.GetNodeB()->GetLabel());
+	return ContainsNode(edge.GetNodeA()) && ContainsNode(edge.GetNodeB());
+}
+
+string Edge::GetNeighbour(string label)
+{
+	string neighbor = _node_a == label ? _node_b
+		: _node_b == label ? _node_a
+		: string();
+
+	if (neighbor == string())
+	{
+		throw runtime_error("Node " + label + " was not found");
+	}
+
+	return neighbor;
 }

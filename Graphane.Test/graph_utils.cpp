@@ -3,52 +3,31 @@
 
 using namespace std;
 
-void CreateEdge(Graph& graph, string label, int weight, string node_a, string node_b, EdgeType type)
-{
-    optional<int> index_a = graph.FindNode(Node(node_a));
-    optional<int> index_b = graph.FindNode(Node(node_b));
-
-    Node* a = graph.GetNodeAt(index_a.value());
-    Node* b = graph.GetNodeAt(index_b.value());
-
-    graph.AddEdge(Edge(label, weight, a, b, type));
-}
-
 Graph GraphUtils::CreateGraph()
 {
-    Graph graph;
+    GraphBuilder graph_builder;
 
-    graph.AddNodes(vector<Node> {
-        Node("A"),
-        Node("B"),
-        Node("C"),
-        Node("D"),
-        Node("E"),
-        Node("F"),
-        Node("G"),
-        Node("H"),
-        Node("I"),
-        Node("J"),
-    });
+    graph_builder.AddNodes(vector<string> {
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" });
 
-    CreateEdge(graph, "0", 2, "A", "B", EdgeType::Bidirectional);
-    CreateEdge(graph, "1", 5, "A", "C", EdgeType::Bidirectional);
-    CreateEdge(graph, "2", 4, "A", "D", EdgeType::Bidirectional);
+    graph_builder.AddEdge("0" , 2, "A", "B");
+    graph_builder.AddEdge("1" , 5, "A", "C");
+    graph_builder.AddEdge("2" , 4, "A", "D");
 
-    CreateEdge(graph, "3", 3, "B", "E", EdgeType::Bidirectional);
-    CreateEdge(graph, "4", 7, "B", "G", EdgeType::Bidirectional);
+    graph_builder.AddEdge("3" , 3, "B", "E");
+    graph_builder.AddEdge("4" , 7, "B", "G");
 
-    CreateEdge(graph, "5", 3, "C", "F", EdgeType::Bidirectional);
-    CreateEdge(graph, "6", 2, "C", "J", EdgeType::Bidirectional);
+    graph_builder.AddEdge("5" , 3, "C", "F");
+    graph_builder.AddEdge("6" , 2, "C", "J");
 
-    CreateEdge(graph, "7", 2, "D", "H", EdgeType::Bidirectional);
+    graph_builder.AddEdge("7" , 2, "D", "H");
 
-    CreateEdge(graph, "8", 2, "E", "H", EdgeType::Bidirectional);
+    graph_builder.AddEdge("8" , 2, "E", "H");
 
-    CreateEdge(graph, "9", 1, "F", "G", EdgeType::Bidirectional);
-    CreateEdge(graph, "10", 2, "F", "I", EdgeType::Bidirectional);
+    graph_builder.AddEdge("9" , 1, "F", "G");
+    graph_builder.AddEdge("10", 2, "F", "I");
 
-    CreateEdge(graph, "11", 1, "I", "J", EdgeType::Bidirectional);
+    graph_builder.AddEdge("11", 1, "I", "J");
 
-    return graph;
+    return graph_builder.Build();
 }

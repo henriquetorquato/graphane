@@ -7,12 +7,12 @@ using namespace std;
 class Dijkstra
 {
 private:
-	Graph m_graph;
+	Graph _graph;
 
 public:
 	Dijkstra(Graph graph)
 	{
-		m_graph = graph;
+		_graph = graph;
 	}
 
 	vector<DijkstraResult> FindShortestPath(string origin_label, string destination_label = string());

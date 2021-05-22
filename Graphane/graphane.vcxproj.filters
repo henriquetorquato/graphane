@@ -45,6 +45,9 @@
     <ClCompile Include="string_utils.cpp">
       <Filter>Arquivos de Origem\utils</Filter>
     </ClCompile>
+    <ClCompile Include="graph_builder.cpp">
+      <Filter>Arquivos de Origem\models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="node.h">
@@ -72,6 +75,9 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="prim_result.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="graph_builder.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

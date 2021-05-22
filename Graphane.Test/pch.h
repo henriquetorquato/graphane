@@ -10,7 +10,9 @@
 
 #include "../Graphane/node.h"
 #include "../Graphane/edge.h"
+
 #include "../Graphane/graph.h"
+#include "../Graphane/graph_builder.h"
 
 #include "../Graphane/dijkstra.h"
 #include "../Graphane/dijkstra_result.h"

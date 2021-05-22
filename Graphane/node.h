@@ -4,18 +4,18 @@
 class Node
 {
 private:
-	std::string m_label;
+	std::string _label;
 
 public:
 	Node(std::string label)
 	{
-		m_label = label;
+		_label = label;
 	}
 
 	bool operator == (const Node& node_ref) const
 	{
-		return node_ref.m_label == m_label;
+		return node_ref._label == _label;
 	}
 
-	std::string GetLabel() { return m_label; }
+	std::string GetLabel() { return _label; }
 };

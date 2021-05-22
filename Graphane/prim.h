@@ -6,7 +6,8 @@
 class Prim 
 {
 private:
-	Graph m_graph;
+	Graph _graph;
+
 	void SeedRand(int seed)
 	{
 		int seed_numer = seed == NULL
@@ -21,7 +22,7 @@ private:
 public:
 	Prim(Graph graph, int seed = NULL)
 	{
-		m_graph = graph;
+		_graph = graph;
 		SeedRand(seed);
 	}
 

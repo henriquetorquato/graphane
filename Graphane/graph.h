@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include <optional>
+#include <map>
+#include <memory>
 #include "node.h"
 #include "edge.h"
 
@@ -9,29 +11,23 @@ using namespace std;
 class Graph
 {
 private:
-	vector<Node> nodes;
-	vector<Edge> edges;
-	bool ContainsNode(Node node);
-	bool ContainsNodeLabel(string label);
-	bool ContainsEdgeLabel(string label);
+	// Map node label to node instance
+	map<string, Node> node_map;
+
+	// Map node label to connected edges
+	map<string, vector<Edge>> connected_edges_map;
+
+	void InitializeMaps(vector<Node> nodes, vector<Edge> edges);
 
 public:
-	void AddNode(Node node);
-	void AddEdge(Edge edge);
+	Graph(vector<Node> nodes, vector<Edge> edges)
+	{
+		InitializeMaps(nodes, edges);
+	}
 
-	void AddNodes(vector<Node> nodes);
-	void AddEdges(vector<Edge> edges);
+	Graph()
+	{ }
 
-	Node GetNode(string label);
 	vector<string> GetNodeLabels();
-
-	Node* GetNodeAt(int index);
-	Edge* GetEdgeAt(int index);
-
-	vector<Node> GetNodes() { return nodes; }
-	vector<Edge> GetEdges() { return edges; }
-	vector<Edge> GetEdges(string node_label);
-
-	optional<int> FindNode(Node node);
-	optional<int> FindEdge(Edge edge);
+	vector<Edge> GetConnectedEdges(string label);
 };

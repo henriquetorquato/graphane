@@ -15,8 +15,8 @@ struct EdgePath
 
 EdgePath CreateEdgePath(Edge edge, string originator)
 {
-	Node* neightbour = edge.GetNodeNeighbour(originator);
-	return { edge.GetLabel(), originator, neightbour->GetLabel(), edge.GetValue() };
+	string neightbour = edge.GetNeighbour(originator);
+	return { edge.GetLabel(), originator, neightbour, edge.GetValue() };
 }
 
 EdgePath GetClosestEdge(vector<EdgePath> edges)
@@ -100,7 +100,7 @@ void SelectNode(vector<string> &selected_nodes, string node)
 void AddNodeAvailableEdges(Graph& graph, vector<EdgePath>& selected_edges, vector<EdgePath>& available_edges, string node_label)
 {
 	vector<Edge>::iterator edge_i;
-	vector<Edge> node_edges = graph.GetEdges(node_label);
+	vector<Edge> node_edges = graph.GetConnectedEdges(node_label);
 
 	for (edge_i = node_edges.begin(); edge_i != node_edges.end(); edge_i++)
 	{
@@ -136,13 +136,13 @@ vector<PrimResult> Prim::FindMinimumSpanningTree()
 	vector<EdgePath> available_edges;
 
 	// Nodes list
-	vector<string> pending_nodes = m_graph.GetNodeLabels();
+	vector<string> pending_nodes = _graph.GetNodeLabels();
 	
 	// Select random starting point
 	string starting_node = PopNode(pending_nodes, string());
 	vector<string> selected_nodes = { starting_node };
 
-	AddNodeAvailableEdges(m_graph, selected_edges, available_edges, starting_node);
+	AddNodeAvailableEdges(_graph, selected_edges, available_edges, starting_node);
 
 	do
 	{
@@ -157,7 +157,7 @@ vector<PrimResult> Prim::FindMinimumSpanningTree()
 		selected_edges.push_back(closest_edge);
 
 		// Add new node available edges
-		AddNodeAvailableEdges(m_graph, selected_edges, available_edges, closest_edge.destination);
+		AddNodeAvailableEdges(_graph, selected_edges, available_edges, closest_edge.destination);
 		PopEdge(available_edges, closest_edge.label);
 
 	} while (!pending_nodes.empty());

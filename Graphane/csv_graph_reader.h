@@ -5,17 +5,19 @@
 #include "edge.h"
 #include "graph.h"
 
+using namespace std;
+
 class CsvGraphReader
 {
 private:
-	std::string m_filename;
+	string _filename;
 
-	std::ifstream GetFileStream(std::string filename);
-	std::vector<Node> CreateNodes(std::ifstream& file);
-	std::string GenerateLabel(int value);
-	std::vector<std::string> ReadHeader(std::ifstream& file);
+	ifstream GetFileStream(string filename);
+	string GenerateLabel(int value);
+	vector<string> ReadNodes(ifstream& file);
+	vector<string> ReadHeader(ifstream& file);
 
 public:
-	CsvGraphReader(std::string filename);
+	CsvGraphReader(string filename);
 	Graph ReadGraph();
 };

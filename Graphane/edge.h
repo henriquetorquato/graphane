@@ -13,33 +13,43 @@ enum class EdgeType {
 class Edge
 {
 private:
-	int m_value;
-	string m_label;
-	Node* m_node_a;
-	Node* m_node_b;
-	EdgeType m_type;
+	int _value;
+	string _label;
+	string _node_a;
+	string _node_b;
+	EdgeType _type;
 
 public:
-	Edge(string label, int value, Node* node_a, Node* node_b, EdgeType type)
+	Edge(string label, int value, string node_a, string node_b, EdgeType type)
 	{
-		m_label = label;
-		m_value = value;
-		m_node_a = node_a;
-		m_node_b = node_b;
-		m_type = type;
+		_label = label;
+		_value = value;
+		_node_a = node_a;
+		_node_b = node_b;
+		_type = type;
 	}
 
-	Edge(string label, int value, Node* node_a, Node* node_b)
+	Edge(string label, int value, string node_a, string node_b)
 		: Edge(label, value, node_a, node_b, EdgeType::Directional) {}
 
-	string GetLabel() { return m_label; }
-	int GetValue() { return m_value; }
-	Node* GetNodeA() { return m_node_a; }
-	Node* GetNodeB() { return m_node_b; }
-	void SetType(EdgeType type) { m_type = type; }
+	bool operator == (const Edge& edge_ref) const
+	{
+		return edge_ref._label == _label
+			&& edge_ref._value == _value
+			&& edge_ref._node_a == _node_a
+			&& edge_ref._node_b == _node_b
+			&& edge_ref._type == _type;
+	}
+
+	int GetValue() { return _value; }
+	string GetLabel() { return _label; }
+	
+	string GetNodeA() { return _node_a; }
+	string GetNodeB() { return _node_b; }
+
+	void SetType(EdgeType type) { _type = type; }
 
 	bool ContainsNode(string label);
-	Node* GetNodeNeighbour(string label);
-
 	bool SignatureMatch(Edge edge);
+	string GetNeighbour(string label);
 };
