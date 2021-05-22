@@ -21,7 +21,7 @@
     <ClCompile Include="dijkstra_tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graph_utils.cpp">
+    <ClCompile Include="graph_generator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="prim_tests.cpp">
@@ -32,7 +32,7 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graph_utils.h">
+    <ClInclude Include="graph_generator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

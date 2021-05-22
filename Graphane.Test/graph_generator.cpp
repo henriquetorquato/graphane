@@ -1,9 +1,9 @@
 #include "pch.h"
-#include "graph_utils.h"
+#include "graph_generator.h"
 
 using namespace std;
 
-Graph GraphUtils::CreateGraph()
+Graph GraphGenerator::Create()
 {
     GraphBuilder graph_builder;
 

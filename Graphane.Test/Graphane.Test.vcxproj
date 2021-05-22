@@ -161,7 +161,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dijkstra_tests.cpp" />
-    <ClCompile Include="graph_utils.cpp" />
+    <ClCompile Include="graph_generator.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -171,7 +171,7 @@
     <ClCompile Include="prim_tests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="graph_utils.h" />
+    <ClInclude Include="graph_generator.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

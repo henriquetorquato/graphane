@@ -1,8 +1,6 @@
 #include "pch.h"
-
-#include "pch.h"
 #include "CppUnitTest.h"
-#include "graph_utils.h"
+#include "graph_generator.h"
 
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -25,7 +23,7 @@ namespace GraphaneTests
 		TEST_METHOD(FindMinimumSpanningTree_WithSeed_ShouldAlwaysFindTheSameMinimumSpanningTree)
 		{
 			// Given: there is a graph
-			Graph graph(GraphUtils::CreateGraph());
+			Graph graph(GraphGenerator::Create());
 			Prim prim(graph, FIXED_SEED);
 
 			// When: finding the minimum spanning tree
@@ -50,7 +48,7 @@ namespace GraphaneTests
 		TEST_METHOD(FindMinimumSpanningTree_WithotSeed_ShouldFindTheSameMinimumSpanningTreeLength)
 		{
 			// Given: there is a graph
-			Graph graph(GraphUtils::CreateGraph());
+			Graph graph(GraphGenerator::Create());
 			Prim prim(graph);
 
 			// When: finding the minimum spanning tree

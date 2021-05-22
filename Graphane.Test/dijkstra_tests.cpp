@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "graph_utils.h"
+#include "graph_generator.h"
 
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -44,7 +44,7 @@ namespace GraphaneTests
 		TEST_METHOD(FindShortestPath_WithoutDestination_ShouldFindEveryPath)
 		{
 			// Given: there is a graph
-			Graph graph(GraphUtils::CreateGraph());
+			Graph graph(GraphGenerator::Create());
 			Dijkstra dijkstra(graph);
 
 			// When: finding the shortest path from `G`
@@ -68,7 +68,7 @@ namespace GraphaneTests
 		TEST_METHOD(FindShortestPath_WithDestination_ShouldFindPath)
 		{
 			// Given: there is a graph
-			Graph graph(GraphUtils::CreateGraph());
+			Graph graph(GraphGenerator::Create());
 			Dijkstra dijkstra(graph);
 
 			// When: finding the shortest path from `G` to `J`
