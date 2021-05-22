@@ -27,9 +27,9 @@ void GraphBuilder::AddNodes(vector<string> labels)
 	}
 }
 
-void GraphBuilder::AddEdge(string label, int value, string node_a, string node_b)
+void GraphBuilder::AddEdge(string label, int value, string node_a, string node_b, EdgeType type)
 {
-	Edge edge(label, value, node_a, node_b, EdgeType::Directional);
+	Edge edge(label, value, node_a, node_b, type);
 
 	// If the edge already exists, it should be bidirectional
 	if (optional<int> found_index = FindEdge(edge))

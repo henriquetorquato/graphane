@@ -23,7 +23,7 @@ private:
 public:
 	void AddNode(string label);
 	void AddNodes(vector<string> labels);
-	void AddEdge(string label, int value, string node_a, string node_b);
+	void AddEdge(string label, int value, string node_a, string node_b, EdgeType type = EdgeType::Directional);
 
 	Graph Build();
 };
