@@ -3,5 +3,5 @@
 class GraphGenerator
 {
 public:
-	static Graph Create();
+	static Graph Create(bool directional = false);
 };

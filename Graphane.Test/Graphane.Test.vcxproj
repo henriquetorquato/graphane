@@ -103,7 +103,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)Graphane\Debug;$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>graph.obj;edge.obj;dijkstra.obj;prim.obj;string_utils.obj;graph_builder.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>graph.obj;edge.obj;dijkstra.obj;prim.obj;string_utils.obj;graph_utils.obj;graph_builder.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

@@ -57,5 +57,29 @@ namespace GraphaneTests
 			// Then: the tree should always have the same edges
 			Assert::AreEqual(size_t(10), minimumSpanningTree.size());
 		}
+
+		TEST_METHOD(IsGraphValid_WithDirectionalGraph_ShouldReturnFalse)
+		{
+			// Given: there is a directional graph
+			Graph graph(GraphGenerator::Create(true));
+			
+			// When: checking if a graph is valid
+			bool result = Prim::IsGraphValid(graph);
+
+			// Then: the result should be false
+			Assert::AreEqual(false, result);
+		}
+
+		TEST_METHOD(IsGraphValid_WithBidirectionalGraph_ShouldReturnTrue)
+		{
+			// Given: there is a bidirectional graph
+			Graph graph(GraphGenerator::Create(false));
+
+			// When: checking if a graph is valid
+			bool result = Prim::IsGraphValid(graph);
+
+			// Then: the result should be true
+			Assert::AreEqual(true, result);
+		}
 	};
 }

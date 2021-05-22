@@ -21,5 +21,6 @@
 #include "../Graphane/prim_result.h"
 
 #include "../Graphane/string_utils.h"
+#include "../Graphane/graph_utils.h"
 
 #endif //PCH_H
