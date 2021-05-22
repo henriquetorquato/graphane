@@ -2,8 +2,6 @@
 #include <stdexcept>
 #include <map>
 
-using namespace std;
-
 void GraphBuilder::AddNode(string label)
 {
 	Node node(label);

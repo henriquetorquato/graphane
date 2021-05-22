@@ -144,9 +144,11 @@
     <ClCompile Include="csv_graph_reader.cpp" />
     <ClCompile Include="dijkstra.cpp" />
     <ClCompile Include="edge.cpp" />
+    <ClCompile Include="ford_fulkerson.cpp" />
     <ClCompile Include="graph.cpp" />
     <ClCompile Include="graphane.cpp" />
     <ClCompile Include="graph_builder.cpp" />
+    <ClCompile Include="graph_utils.cpp" />
     <ClCompile Include="prim.cpp" />
     <ClCompile Include="string_utils.cpp" />
   </ItemGroup>
@@ -155,8 +157,11 @@
     <ClInclude Include="dijkstra.h" />
     <ClInclude Include="dijkstra_result.h" />
     <ClInclude Include="edge.h" />
+    <ClInclude Include="ford_fulkerson.h" />
+    <ClInclude Include="ford_fulkerson_result.h" />
     <ClInclude Include="graph.h" />
     <ClInclude Include="graph_builder.h" />
+    <ClInclude Include="graph_utils.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="prim.h" />
     <ClInclude Include="prim_result.h" />

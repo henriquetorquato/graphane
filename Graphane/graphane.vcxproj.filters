@@ -48,6 +48,12 @@
     <ClCompile Include="graph_builder.cpp">
       <Filter>Arquivos de Origem\models</Filter>
     </ClCompile>
+    <ClCompile Include="ford_fulkerson.cpp">
+      <Filter>Arquivos de Origem\implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="graph_utils.cpp">
+      <Filter>Arquivos de Origem\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="node.h">
@@ -78,6 +84,15 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="graph_builder.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="ford_fulkerson.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="ford_fulkerson_result.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="graph_utils.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

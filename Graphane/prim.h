@@ -26,5 +26,6 @@ public:
 		SeedRand(seed);
 	}
 
+	static bool IsGraphValid(Graph graph);
 	vector<PrimResult> FindMinimumSpanningTree();
 };

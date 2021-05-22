@@ -3,8 +3,6 @@
 #include <sstream>
 #include <iostream>
 
-using namespace std;
-
 struct NodeWeight
 {
 	string node;

@@ -2,8 +2,7 @@
 #include "string_utils.h"
 #include <sstream>
 #include <iostream>
-
-using namespace std;
+#include "graph_utils.h"
 
 struct EdgePath
 {
@@ -21,6 +20,11 @@ EdgePath CreateEdgePath(Edge edge, string originator)
 
 EdgePath GetClosestEdge(vector<EdgePath> edges)
 {
+	if (edges.size() == 0)
+	{
+		return { string(), string(), string(), 0 };
+	}
+
 	EdgePath closest_edge = edges.at(0);
 	vector<EdgePath>::iterator edges_i;
 
@@ -163,4 +167,10 @@ vector<PrimResult> Prim::FindMinimumSpanningTree()
 	} while (!pending_nodes.empty());
 
 	return MapMinimumSpanningTree(selected_edges);
+}
+
+bool Prim::IsGraphValid(Graph graph)
+{
+	// Prim only works on non directional graphs
+	return IsNonDirectional(graph);
 }

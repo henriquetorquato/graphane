@@ -47,7 +47,16 @@ public:
 	string GetNodeA() { return _node_a; }
 	string GetNodeB() { return _node_b; }
 
-	bool IsBidirectional();
+	bool IsBidirectional()
+	{
+		return _type == EdgeType::Bidirectional;
+	}
+
+	bool IsDirectional()
+	{
+		return _type == EdgeType::Directional;
+	}
+
 	void SetType(EdgeType type) { _type = type; }
 
 	bool ContainsNode(string label);

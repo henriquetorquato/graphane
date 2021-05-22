@@ -1,16 +1,14 @@
 #include "graph.h"
 #include <stdexcept>
 
-using namespace std;
-
-void Graph::InitializeMaps(vector<Node> nodes, vector<Edge> edges)
+void Graph::InitializeMaps()
 {
 	// Reset maps
 	node_map.clear();
 	connected_edges_map.clear();
 
 	vector<Node>::iterator node_i;
-	for (node_i = nodes.begin(); node_i != nodes.end(); node_i++)
+	for (node_i = _nodes.begin(); node_i != _nodes.end(); node_i++)
 	{
 		// Map node label to instance
 		Node node(*node_i);
@@ -20,7 +18,7 @@ void Graph::InitializeMaps(vector<Node> nodes, vector<Edge> edges)
 		vector<Edge>::iterator edge_i;
 		vector<Edge> connected_edges;
 
-		for (edge_i = edges.begin(); edge_i != edges.end(); edge_i++)
+		for (edge_i = _edges.begin(); edge_i != _edges.end(); edge_i++)
 		{
 			Edge edge = *edge_i;
 
@@ -61,7 +59,7 @@ vector<Edge> Graph::GetConnectedEdges(string label)
 
 	if (it == connected_edges_map.end())
 	{
-		throw runtime_error("Node " + label + " not found");
+		return vector<Edge>();
 	}
 
 	vector<Edge> connected_edges;

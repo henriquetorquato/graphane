@@ -5,12 +5,14 @@
 #include "string_utils.h"
 #include "dijkstra.h"
 #include "prim.h"
+#include "ford_fulkerson.h"
+
 #include <iostream>
 #include <Windows.h>
 
 using namespace std;
 
-const string TARGET_FILE = "test2.csv";
+const string TARGET_FILE = "\\Tests\\test3_directional.csv";
 const string DIRECTORY_SEPARATOR = "\\";
 
 // https://gist.github.com/karolisjan/f9b8ac3ae2d41ec0ce70f2feac6bdfaf
@@ -18,9 +20,19 @@ static string GetExecutingPath()
 {
 	char buffer[MAX_PATH];
 	GetModuleFileNameA(NULL, buffer, MAX_PATH);
-	string::size_type pos = string(buffer).find_last_of(DIRECTORY_SEPARATOR);
+	string path(buffer);
 
-	return string(buffer).substr(0, pos);
+	size_t position(0);
+	vector<size_t> positions;
+	
+	while (position != string::npos)
+	{
+		position = path.find(DIRECTORY_SEPARATOR, position + 1);
+		positions.push_back(position);
+	}
+
+	// Go back two dir's
+	return path.substr(0, positions.at(positions.size() - 3));
 }
 
 static void DisplayDijkstraShortestPaths(vector<DijkstraResult> shortestPaths)
@@ -52,20 +64,24 @@ static void DisplayPrimMinimumSpanningTree(vector<PrimResult> minimumSpanningTre
 	cout << ToString(edges, DEFAULT_LIST_SEPARATOR) << endl;
 }
 
+static void DisplayFordFulkersonMaximumFlow(vector<FordFulkersonResult> maximumFlow)
+{
+
+}
+
 int main()
 {
 	string path(GetExecutingPath());
-	path.append(DIRECTORY_SEPARATOR);
 	path.append(TARGET_FILE);
 
     CsvGraphReader reader(path);
     Graph graph = reader.ReadGraph();
 
 	// Dijkstra
-	cout << "Shortest path from 'G' (Dijkstra):" << endl;
+	cout << "Shortest path from `A` (Dijkstra):" << endl;
 
 	Dijkstra dijkstra(graph);
-	vector<DijkstraResult> shortestPaths = dijkstra.FindShortestPath("G");
+	vector<DijkstraResult> shortestPaths = dijkstra.FindShortestPath("A");
 	DisplayDijkstraShortestPaths(shortestPaths);
 
 	cout << "\n" << endl;
@@ -73,7 +89,24 @@ int main()
 	// Prim
 	cout << "Minimum spanning tree (Prim):" << endl;
 
-	Prim prim(graph);
-	vector<PrimResult> minimumSpanningTree = prim.FindMinimumSpanningTree();
-	DisplayPrimMinimumSpanningTree(minimumSpanningTree);
+	if (Prim::IsGraphValid(graph))
+	{
+		Prim prim(graph);
+		vector<PrimResult> minimumSpanningTree = prim.FindMinimumSpanningTree();
+		DisplayPrimMinimumSpanningTree(minimumSpanningTree);
+	}
+	else
+	{
+		cout << "Prim's algorithm cannot process this graph!" << endl;
+	}
+	
+
+	cout << "\n" << endl;
+
+	// Ford-Fulkerson
+	cout << "Maximum flow from `A` to `G` (Prim):" << endl;
+
+	FordFulkerson fordFulkerson(graph);
+	vector<FordFulkersonResult> maximumFlow = fordFulkerson.FindMaximumFlow("A", "G");
+	DisplayFordFulkersonMaximumFlow(maximumFlow);
 }
