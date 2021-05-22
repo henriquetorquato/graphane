@@ -15,6 +15,10 @@ using namespace std;
 const string TARGET_FILE = "\\Tests\\test3_directional.csv";
 const string DIRECTORY_SEPARATOR = "\\";
 
+const string DIJKSTRA_ORIGIN = "A";
+const string FORD_FULKERSON_SOURCE = "A";
+const string FORD_FULKERSON_TERMINAL = "G";
+
 // https://gist.github.com/karolisjan/f9b8ac3ae2d41ec0ce70f2feac6bdfaf
 static string GetExecutingPath()
 {
@@ -78,10 +82,10 @@ int main()
     Graph graph = reader.ReadGraph();
 
 	// Dijkstra
-	cout << "Shortest path from `A` (Dijkstra):" << endl;
+	cout << "Shortest path from `" << DIJKSTRA_ORIGIN << "` (Dijkstra):" << endl;
 
 	Dijkstra dijkstra(graph);
-	vector<DijkstraResult> shortestPaths = dijkstra.FindShortestPath("A");
+	vector<DijkstraResult> shortestPaths = dijkstra.FindShortestPath(DIJKSTRA_ORIGIN);
 	DisplayDijkstraShortestPaths(shortestPaths);
 
 	cout << "\n" << endl;
@@ -99,14 +103,31 @@ int main()
 	{
 		cout << "Prim's algorithm cannot process this graph!" << endl;
 	}
-	
 
 	cout << "\n" << endl;
 
 	// Ford-Fulkerson
-	cout << "Maximum flow from `A` to `G` (Prim):" << endl;
+	cout << "Maximum flow from `"
+		<< FORD_FULKERSON_SOURCE
+		<< "` to `"
+		<< FORD_FULKERSON_TERMINAL
+		<< "` (Ford-Fulkerson):" << endl;
 
-	FordFulkerson fordFulkerson(graph);
-	vector<FordFulkersonResult> maximumFlow = fordFulkerson.FindMaximumFlow("A", "G");
-	DisplayFordFulkersonMaximumFlow(maximumFlow);
+	if (FordFulkerson::IsGraphValid(graph, "A", "G"))
+	{
+		FordFulkerson fordFulkerson(graph);
+		vector<FordFulkersonResult> maximumFlow = fordFulkerson.FindMaximumFlow("A", "G");
+		DisplayFordFulkersonMaximumFlow(maximumFlow);
+	}
+	else
+	{
+		cout << "Ford-Fulkerson's algorithm cannot process this graph with source `"
+			<< FORD_FULKERSON_SOURCE
+			<< "` and terminal `"
+			<< FORD_FULKERSON_TERMINAL
+			<< "`!"
+			<< endl;
+	}
+
+	cout << "\n" << endl;
 }
