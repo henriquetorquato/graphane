@@ -12,7 +12,7 @@
 
 using namespace std;
 
-const string TARGET_FILE = "\\Tests\\test3_directional.csv";
+const string TARGET_FILE = "\\Tests\\test4_max_flow_19.csv";
 const string DIRECTORY_SEPARATOR = "\\";
 
 const string DIJKSTRA_ORIGIN = "A";
