@@ -9,7 +9,7 @@ bool Edge::ContainsNode(string label)
 bool Edge::SignatureMatch(Edge edge)
 {
 	// If container both edge nodes
-	return ContainsNode(edge.GetNodeA()) && ContainsNode(edge.GetNodeB());
+	return ContainsNode(edge.GetNodeA()) && ContainsNode(edge.GetNodeB()) && _value == edge.GetValue();
 }
 
 string Edge::GetNeighbour(string label)

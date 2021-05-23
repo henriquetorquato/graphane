@@ -20,6 +20,9 @@ private:
 	// Map node label to connected edges
 	map<string, vector<Edge>> connected_edges_map;
 
+	// Map node label to its neighbours
+	map<string, vector<string>> node_neighbours_map;
+
 	void InitializeMaps();
 
 public:
@@ -36,5 +39,6 @@ public:
 	vector<Edge> GetEdges() { return _edges; }
 
 	vector<string> GetNodeLabels();
+	vector<string> GetNeighbours(string label);
 	vector<Edge> GetConnectedEdges(string label);
 };

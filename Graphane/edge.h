@@ -57,7 +57,10 @@ public:
 		return _type == EdgeType::Directional;
 	}
 
-	void SetType(EdgeType type) { _type = type; }
+	void SetType(EdgeType type)
+	{ 
+		_type = type;
+	}
 
 	bool ContainsNode(string label);
 	bool SignatureMatch(Edge edge);

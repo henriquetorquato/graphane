@@ -68,7 +68,7 @@ static void DisplayPrimMinimumSpanningTree(vector<PrimResult> minimumSpanningTre
 	cout << ToString(edges, DEFAULT_LIST_SEPARATOR) << endl;
 }
 
-static void DisplayFordFulkersonMaximumFlow(vector<FordFulkersonResult> maximumFlow)
+static void DisplayFordFulkersonMaximumFlow(int maximumFlow)
 {
 
 }
@@ -116,7 +116,7 @@ int main()
 	if (FordFulkerson::IsGraphValid(graph, "A", "G"))
 	{
 		FordFulkerson fordFulkerson(graph);
-		vector<FordFulkersonResult> maximumFlow = fordFulkerson.FindMaximumFlow("A", "G");
+		int maximumFlow = fordFulkerson.FindMaximumFlow("A", "G");
 		DisplayFordFulkersonMaximumFlow(maximumFlow);
 	}
 	else

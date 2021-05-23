@@ -17,5 +17,5 @@ public:
 	}
 
 	static bool IsGraphValid(Graph graph, string source, string terminal);
-	vector<FordFulkersonResult> FindMaximumFlow(string source, string terminal);
+	int FindMaximumFlow(string source, string terminal);
 };
