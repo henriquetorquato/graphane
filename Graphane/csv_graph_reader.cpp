@@ -52,7 +52,7 @@ Graph CsvGraphReader::ReadGraph()
 					* The last character does not have the separator,
 					* this "if" is so that this last character is processed.
 					*/
-					if (char_index < line.length() - 1)
+					if (char_index < line.length())
 					{
 						continue;
 					}
