@@ -158,7 +158,6 @@
     <ClInclude Include="dijkstra_result.h" />
     <ClInclude Include="edge.h" />
     <ClInclude Include="ford_fulkerson.h" />
-    <ClInclude Include="ford_fulkerson_result.h" />
     <ClInclude Include="graph.h" />
     <ClInclude Include="graph_builder.h" />
     <ClInclude Include="graph_utils.h" />

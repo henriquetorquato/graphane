@@ -89,9 +89,6 @@
     <ClInclude Include="ford_fulkerson.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="ford_fulkerson_result.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="graph_utils.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>

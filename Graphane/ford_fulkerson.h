@@ -1,6 +1,5 @@
 #pragma once
 #include "graph.h"
-#include "ford_fulkerson_result.h"
 
 class FordFulkerson
 {
