@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "graph_generator.h"
 
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

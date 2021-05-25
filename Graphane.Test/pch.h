@@ -20,7 +20,13 @@
 #include "../Graphane/prim.h"
 #include "../Graphane/prim_result.h"
 
+#include "../Graphane/ford_fulkerson.h"
+
 #include "../Graphane/string_utils.h"
 #include "../Graphane/graph_utils.h"
+
+// Local files
+
+#include "graph_generator.h"
 
 #endif //PCH_H
