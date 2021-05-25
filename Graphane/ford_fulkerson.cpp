@@ -1,4 +1,5 @@
 #include "ford_fulkerson.h"
+#include "graph_utils.h"
 #include <queue>
 #include <memory>
 
@@ -27,14 +28,10 @@ map<string, FlowCapacity> CreateResidualGraph(Graph graph)
 
 		residual_graph.insert(make_pair(key, capacity));
 
-		// If the edge is bi-directional, then there is also a reverse flow
-		if (edge.IsBidirectional())
-		{
-			key = edge.GetNodeB() + edge.GetNodeA();
-			capacity = { edge.GetNodeB(), edge.GetNodeA(), 0, edge.GetValue() };
+		string residual_key = edge.GetNodeB() + edge.GetNodeA();
+		FlowCapacity residual_capacity = { edge.GetNodeB(), edge.GetNodeA(), edge.GetValue(), 0 };
 
-			residual_graph.insert(make_pair(key, capacity));
-		}
+		residual_graph.insert(make_pair(residual_key, residual_capacity));
 	}
 
 	return residual_graph;
@@ -63,9 +60,15 @@ bool BreadthFirstSeach(Graph graph, map<string, FlowCapacity> residual_graph, st
 			string destination = edge.GetNeighbour(next_node);
 
 			string key = next_node + destination;
-			FlowCapacity flow = residual_graph[key];
+			string inverseKey = destination + next_node;
 
-			// TODO: Check if path value is < capacity and reverse path is > 0
+			FlowCapacity flow = residual_graph[key];
+			FlowCapacity residual_flow = residual_graph[inverseKey];
+
+			if (flow.value >= flow.capacity && residual_flow.value <= 0)
+			{
+				continue;
+			}
 
 			if (flow.destination == terminal)
 			{
@@ -94,12 +97,6 @@ bool BreadthFirstSeach(Graph graph, map<string, FlowCapacity> residual_graph, st
 
 int FordFulkerson::FindMaximumFlow(string source, string terminal)
 {
-	/*
-	* Check:
-	* https://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/
-	* https://www.youtube.com/watch?v=Tl90tNtKvxs
-	*/
-
 	// Create residual graph
 	map<string, FlowCapacity> residual_graph = CreateResidualGraph(_graph);
 
@@ -113,14 +110,16 @@ int FordFulkerson::FindMaximumFlow(string source, string terminal)
 		FlowCapacity current_flow = path.back();		
 		bool source_reached = false;
 
-		int bottleneck_capacity = current_flow.capacity;
+		int bottleneck_capacity = current_flow.capacity - current_flow.value;
 		vector<pair<string, string>> walked_path;
 
 		while (!source_reached)
 		{
-			if (current_flow.capacity < bottleneck_capacity)
+			int capacity = current_flow.capacity - current_flow.value;
+
+			if (capacity < bottleneck_capacity)
 			{
-				bottleneck_capacity = current_flow.capacity;
+				bottleneck_capacity = capacity;
 			}
 
 			if (current_flow.origin == source)
@@ -159,12 +158,10 @@ int FordFulkerson::FindMaximumFlow(string source, string terminal)
 			pair<string, string> walked_section(*path_i);
 
 			string key = walked_section.first + walked_section.second;
-			string inverseKey = walked_section.second + walked_section.first;
+			string residual_key = walked_section.second + walked_section.first;
 
 			residual_graph[key].value += bottleneck_capacity;
-
-			// TODO: Fix this, check if this is needed
-			residual_graph[inverseKey].value -= bottleneck_capacity;
+			residual_graph[residual_key].value -= bottleneck_capacity;
 		}
 
 		path.clear();
@@ -176,7 +173,9 @@ int FordFulkerson::FindMaximumFlow(string source, string terminal)
 
 bool FordFulkerson::IsGraphValid(Graph graph, string source, string terminal)
 {
-	return IsSourceValid(graph, source) && IsTerminalValid(graph, terminal);
+	return IsFullyDirectional(graph)
+		&& IsSourceValid(graph, source)
+		&& IsTerminalValid(graph, terminal);
 }
 
 // The source can't have any edges directed to it
@@ -193,10 +192,10 @@ bool FordFulkerson::IsSourceValid(Graph graph, string source)
 		* If it's a directional edge destination
 		* or, if it's part of a bi-directional edge.
 		*/
-		bool isInvalid = (edge.IsDirectional() && edge.GetNodeB() == source)
+		bool is_invalid = (edge.IsDirectional() && edge.GetNodeB() == source)
 			|| (edge.IsBidirectional() && edge.ContainsNode(source));
 
-		if (isInvalid)
+		if (is_invalid)
 		{
 			return false;
 		}
@@ -219,10 +218,10 @@ bool FordFulkerson::IsTerminalValid(Graph graph, string terminal)
 		* If it's a directional edge origin
 		* or, if it's part of a bi-directional edge.
 		*/
-		bool isInvalid = (edge.IsDirectional() && edge.GetNodeA() == terminal)
+		bool is_invalid = (edge.IsDirectional() && edge.GetNodeA() == terminal)
 			|| (edge.IsBidirectional() && edge.ContainsNode(terminal));
 
-		if (isInvalid)
+		if (is_invalid)
 		{
 			return false;
 		}

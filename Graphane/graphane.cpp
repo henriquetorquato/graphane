@@ -16,8 +16,8 @@ const string TARGET_FILE = "\\Tests\\test4_max_flow_19.csv";
 const string DIRECTORY_SEPARATOR = "\\";
 
 const string DIJKSTRA_ORIGIN = "A";
-const string FORD_FULKERSON_SOURCE = "A";
-const string FORD_FULKERSON_TERMINAL = "G";
+const string FORD_FULKERSON_SOURCE = "S";
+const string FORD_FULKERSON_TERMINAL = "T";
 
 // https://gist.github.com/karolisjan/f9b8ac3ae2d41ec0ce70f2feac6bdfaf
 static string GetExecutingPath()
@@ -39,10 +39,10 @@ static string GetExecutingPath()
 	return path.substr(0, positions.at(positions.size() - 3));
 }
 
-static void DisplayDijkstraShortestPaths(vector<DijkstraResult> shortestPaths)
+static void DisplayDijkstraShortestPaths(vector<DijkstraResult> shortest_paths)
 {
 	vector<DijkstraResult>::iterator it;
-	for (it = shortestPaths.begin(); it != shortestPaths.end(); it++)
+	for (it = shortest_paths.begin(); it != shortest_paths.end(); it++)
 	{
 		DijkstraResult result(*it);
 
@@ -54,12 +54,12 @@ static void DisplayDijkstraShortestPaths(vector<DijkstraResult> shortestPaths)
 	}
 }
 
-static void DisplayPrimMinimumSpanningTree(vector<PrimResult> minimumSpanningTree)
+static void DisplayPrimMinimumSpanningTree(vector<PrimResult> minimum_spanning_tree)
 {
 	vector<string> edges;
 	vector<PrimResult>::iterator it;
 
-	for (it = minimumSpanningTree.begin(); it != minimumSpanningTree.end(); it++)
+	for (it = minimum_spanning_tree.begin(); it != minimum_spanning_tree.end(); it++)
 	{
 		PrimResult result(*it);
 		edges.push_back(result.origin + result.destination);
@@ -68,9 +68,9 @@ static void DisplayPrimMinimumSpanningTree(vector<PrimResult> minimumSpanningTre
 	cout << ToString(edges, DEFAULT_LIST_SEPARATOR) << endl;
 }
 
-static void DisplayFordFulkersonMaximumFlow(int maximumFlow)
+static void DisplayFordFulkersonMaximumFlow(int maximum_flow)
 {
-
+	cout << to_string(maximum_flow) << endl;
 }
 
 int main()
@@ -85,8 +85,8 @@ int main()
 	cout << "Shortest path from `" << DIJKSTRA_ORIGIN << "` (Dijkstra):" << endl;
 
 	Dijkstra dijkstra(graph);
-	vector<DijkstraResult> shortestPaths = dijkstra.FindShortestPath(DIJKSTRA_ORIGIN);
-	DisplayDijkstraShortestPaths(shortestPaths);
+	vector<DijkstraResult> shortest_paths = dijkstra.FindShortestPath(DIJKSTRA_ORIGIN);
+	DisplayDijkstraShortestPaths(shortest_paths);
 
 	cout << "\n" << endl;
 
@@ -96,8 +96,8 @@ int main()
 	if (Prim::IsGraphValid(graph))
 	{
 		Prim prim(graph);
-		vector<PrimResult> minimumSpanningTree = prim.FindMinimumSpanningTree();
-		DisplayPrimMinimumSpanningTree(minimumSpanningTree);
+		vector<PrimResult> minimum_spanning_tree = prim.FindMinimumSpanningTree();
+		DisplayPrimMinimumSpanningTree(minimum_spanning_tree);
 	}
 	else
 	{
@@ -113,11 +113,11 @@ int main()
 		<< FORD_FULKERSON_TERMINAL
 		<< "` (Ford-Fulkerson):" << endl;
 
-	if (FordFulkerson::IsGraphValid(graph, "A", "G"))
+	if (FordFulkerson::IsGraphValid(graph, FORD_FULKERSON_SOURCE, FORD_FULKERSON_TERMINAL))
 	{
-		FordFulkerson fordFulkerson(graph);
-		int maximumFlow = fordFulkerson.FindMaximumFlow("A", "G");
-		DisplayFordFulkersonMaximumFlow(maximumFlow);
+		FordFulkerson ford_fulkerson(graph);
+		int maximum_flow = ford_fulkerson.FindMaximumFlow(FORD_FULKERSON_SOURCE, FORD_FULKERSON_TERMINAL);
+		DisplayFordFulkersonMaximumFlow(maximum_flow);
 	}
 	else
 	{
