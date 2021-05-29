@@ -50,7 +50,7 @@ Graph createTransposedGraph(Graph original_graph)
 	return builder.Build();
 }
 
-void DepthFirstSearch(string node, Graph graph, map<string, bool>& visited_nodes, vector<string>& component)
+void DepthFirstSearch(string node, Graph graph, map<string, bool>& visited_nodes, vector<string>& path, stack<string>& node_stack)
 {
 	// Mark node as visited
 	visited_nodes[node] = true;
@@ -59,7 +59,7 @@ void DepthFirstSearch(string node, Graph graph, map<string, bool>& visited_nodes
 	* Add node to component.
 	* Only used when calculating the components (second use of DFS).
 	*/ 
-	component.push_back(node);
+	path.push_back(node);
 
 	vector<string>::iterator neighbour_i;
 	vector<string> neighbours = graph.GetNeighbours(node);
@@ -73,8 +73,10 @@ void DepthFirstSearch(string node, Graph graph, map<string, bool>& visited_nodes
 			continue;
 		}
 
-		DepthFirstSearch(neighbour, graph, visited_nodes, component);
+		DepthFirstSearch(neighbour, graph, visited_nodes, path, node_stack);
 	}
+
+	node_stack.push(node);
 }
 
 vector<vector<string>> Kosaraju::FindStronglyConnectedComponents()
@@ -95,9 +97,8 @@ vector<vector<string>> Kosaraju::FindStronglyConnectedComponents()
 			continue;
 		}
 
-		vector<string> mock_vector;
-		DepthFirstSearch(node, _graph, visited_nodes, mock_vector);
-		node_stack.push(node);
+		vector<string> path;
+		DepthFirstSearch(node, _graph, visited_nodes, path, node_stack);
 	}
 
 	Graph transposed_graph = createTransposedGraph(_graph);
@@ -114,7 +115,8 @@ vector<vector<string>> Kosaraju::FindStronglyConnectedComponents()
 		}
 
 		vector<string> component;
-		DepthFirstSearch(node, transposed_graph, visited_nodes, component);
+		stack<string> mock_stack;
+		DepthFirstSearch(node, transposed_graph, visited_nodes, component, mock_stack);
 
 		components.push_back(component);
 	} while (!node_stack.empty());
