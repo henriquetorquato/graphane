@@ -22,7 +22,7 @@ namespace GraphaneTests
 		TEST_METHOD(FindMinimumSpanningTree_WithSeed_ShouldAlwaysFindTheSameMinimumSpanningTree)
 		{
 			// Given: there is a graph
-			Graph graph(GraphGenerator::Create());
+			Graph graph(GraphGenerator::CreateBiDirectional());
 			Prim prim(graph, FIXED_SEED);
 
 			// When: finding the minimum spanning tree
@@ -47,7 +47,7 @@ namespace GraphaneTests
 		TEST_METHOD(FindMinimumSpanningTree_WithotSeed_ShouldFindTheSameMinimumSpanningTreeLength)
 		{
 			// Given: there is a graph
-			Graph graph(GraphGenerator::Create());
+			Graph graph(GraphGenerator::CreateBiDirectional());
 			Prim prim(graph);
 
 			// When: finding the minimum spanning tree
@@ -60,7 +60,7 @@ namespace GraphaneTests
 		TEST_METHOD(IsGraphValid_WithDirectionalGraph_ShouldReturnFalse)
 		{
 			// Given: there is a directional graph
-			Graph graph(GraphGenerator::Create(true));
+			Graph graph(GraphGenerator::CreateDirectionalB());
 			
 			// When: checking if a graph is valid
 			bool result = Prim::IsGraphValid(graph);
@@ -72,7 +72,7 @@ namespace GraphaneTests
 		TEST_METHOD(IsGraphValid_WithBidirectionalGraph_ShouldReturnTrue)
 		{
 			// Given: there is a bidirectional graph
-			Graph graph(GraphGenerator::Create(false));
+			Graph graph(GraphGenerator::CreateBiDirectional());
 
 			// When: checking if a graph is valid
 			bool result = Prim::IsGraphValid(graph);

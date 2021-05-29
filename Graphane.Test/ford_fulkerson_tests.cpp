@@ -12,7 +12,7 @@ namespace GraphaneTests
 		TEST_METHOD(FindMaximumFlow_WithDirectionalGraph_ShouldSucceed)
 		{
 			// Given: there is a directional graph
-			Graph graph(GraphGenerator::Create(true));
+			Graph graph(GraphGenerator::CreateDirectionalB());
 			FordFulkerson ford_fulkerson(graph);
 
 			// When: calculating the maximum flow from S to T
@@ -25,7 +25,7 @@ namespace GraphaneTests
 		TEST_METHOD(IsGraphValid_WithDirectionalGraph_ShouldReturnTrue)
 		{
 			// Given: there is a directional graph
-			Graph graph(GraphGenerator::Create(true));
+			Graph graph(GraphGenerator::CreateDirectionalB());
 
 			// When: checking if the graph is valid
 			bool result = FordFulkerson::IsGraphValid(graph, "S", "T");
@@ -37,7 +37,7 @@ namespace GraphaneTests
 		TEST_METHOD(IsGraphValid_WithBidirectionalGraph_ShouldReturnFalse)
 		{
 			// Given: there is a bi-directional graph
-			Graph graph(GraphGenerator::Create(false));
+			Graph graph(GraphGenerator::CreateBiDirectional());
 
 			// When: checking if the graph is valid
 			bool result = FordFulkerson::IsGraphValid(graph, "S", "T");
@@ -49,7 +49,7 @@ namespace GraphaneTests
 		TEST_METHOD(IsGraphValid_WithInvalidSource_ShouldReturnFalse)
 		{
 			// Given: there is a directional graph
-			Graph graph(GraphGenerator::Create(true));
+			Graph graph(GraphGenerator::CreateDirectionalB());
 
 			// When: checking if the graph is valid
 			bool result = FordFulkerson::IsGraphValid(graph, "A", "T");
@@ -61,7 +61,7 @@ namespace GraphaneTests
 		TEST_METHOD(IsGraphValid_WithInvalidTerminal_ShouldReturnFalse)
 		{
 			// Given: there is a directional graph
-			Graph graph(GraphGenerator::Create(true));
+			Graph graph(GraphGenerator::CreateDirectionalB());
 
 			// When: checking if the graph is valid
 			bool result = FordFulkerson::IsGraphValid(graph, "S", "A");

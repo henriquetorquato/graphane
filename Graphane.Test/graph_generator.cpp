@@ -2,7 +2,38 @@
 
 using namespace std;
 
-static Graph CreateDirectionalGraph()
+Graph GraphGenerator::CreateDirectionalA()
+{
+    GraphBuilder graph_builder;
+
+    graph_builder.AddNodes(vector<string> {
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" });
+
+    graph_builder.AddEdge("0",  5, "A", "C", EdgeType::Directional);
+    graph_builder.AddEdge("1",  4, "A", "D", EdgeType::Directional);
+
+    graph_builder.AddEdge("2",  7, "B", "G", EdgeType::Directional);
+
+    graph_builder.AddEdge("3",  3, "C", "F", EdgeType::Bidirectional);
+
+    graph_builder.AddEdge("4",  3, "D", "B", EdgeType::Directional);
+    graph_builder.AddEdge("5",  2, "D", "H", EdgeType::Bidirectional);
+
+    graph_builder.AddEdge("6",  3, "E", "B", EdgeType::Directional);
+
+    graph_builder.AddEdge("7",  2, "F", "J", EdgeType::Directional);
+
+    graph_builder.AddEdge("8",  2, "H", "E", EdgeType::Directional);
+
+    graph_builder.AddEdge("9",  3, "I", "G", EdgeType::Directional);
+
+    graph_builder.AddEdge("10", 2, "J", "C", EdgeType::Directional);
+    graph_builder.AddEdge("11", 1, "J", "I", EdgeType::Directional);
+
+    return graph_builder.Build();
+}
+
+Graph GraphGenerator::CreateDirectionalB()
 {
     GraphBuilder graph_builder;
 
@@ -25,7 +56,7 @@ static Graph CreateDirectionalGraph()
     return graph_builder.Build();
 }
 
-static Graph CreateBidirectionalGraph()
+Graph GraphGenerator::CreateBiDirectional()
 {
     GraphBuilder graph_builder;
 
@@ -52,11 +83,4 @@ static Graph CreateBidirectionalGraph()
     graph_builder.AddEdge("11", 1, "I", "J", EdgeType::Bidirectional);
 
     return graph_builder.Build();
-}
-
-Graph GraphGenerator::Create(bool directional)
-{
-    return directional
-        ? CreateDirectionalGraph()
-        : CreateBidirectionalGraph();
 }

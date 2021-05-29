@@ -43,7 +43,7 @@ namespace GraphaneTests
 		TEST_METHOD(FindShortestPath_WithoutDestination_ShouldFindEveryPath)
 		{
 			// Given: there is a graph
-			Graph graph(GraphGenerator::Create());
+			Graph graph(GraphGenerator::CreateBiDirectional());
 			Dijkstra dijkstra(graph);
 
 			// When: finding the shortest path from `G`
@@ -67,7 +67,7 @@ namespace GraphaneTests
 		TEST_METHOD(FindShortestPath_WithDestination_ShouldFindPath)
 		{
 			// Given: there is a graph
-			Graph graph(GraphGenerator::Create());
+			Graph graph(GraphGenerator::CreateBiDirectional());
 			Dijkstra dijkstra(graph);
 
 			// When: finding the shortest path from `G` to `J`

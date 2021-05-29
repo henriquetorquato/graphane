@@ -3,5 +3,7 @@
 class GraphGenerator
 {
 public:
-	static Graph Create(bool directional = false);
+	static Graph CreateDirectionalA();
+	static Graph CreateDirectionalB();
+	static Graph CreateBiDirectional();
 };
