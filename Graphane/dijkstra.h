@@ -3,7 +3,7 @@
 
 using namespace std;
 
-struct ShortestPath
+struct DijkstraShortestPath
 {
 	string origin;
 	string destination;
@@ -13,7 +13,7 @@ struct ShortestPath
 
 struct DijkstraResult
 {
-	vector<ShortestPath> paths;
+	vector<DijkstraShortestPath> paths;
 };
 
 class Dijkstra

@@ -16,10 +16,10 @@ namespace GraphaneTests
 			FordFulkerson ford_fulkerson(graph);
 
 			// When: calculating the maximum flow from S to T
-			int result = ford_fulkerson.FindMaximumFlow("S", "T");
+			FordFulkersonResult result = ford_fulkerson.FindMaximumFlow("S", "T");
 
 			// Then: the maximum flow should always be 19
-			Assert::AreEqual(19, result);
+			Assert::AreEqual(19, result.value);
 		}
 
 		TEST_METHOD(IsGraphValid_WithDirectionalGraph_ShouldReturnTrue)
