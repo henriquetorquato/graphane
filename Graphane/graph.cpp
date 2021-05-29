@@ -81,3 +81,8 @@ vector<Edge> Graph::GetConnectedEdges(string label)
 
 	return it->second;
 }
+
+bool Graph::ContainsNode(Node node)
+{
+	return find(_nodes.begin(), _nodes.end(), node) != _nodes.end();
+}

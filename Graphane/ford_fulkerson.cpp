@@ -173,7 +173,9 @@ int FordFulkerson::FindMaximumFlow(string source, string terminal)
 
 bool FordFulkerson::IsGraphValid(Graph graph, string source, string terminal)
 {
-	return IsFullyDirectional(graph)
+	return graph.ContainsNode(Node(source))
+		&& graph.ContainsNode(Node(terminal))
+		&& IsFullyDirectional(graph)
 		&& IsSourceValid(graph, source)
 		&& IsTerminalValid(graph, terminal);
 }

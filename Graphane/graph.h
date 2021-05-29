@@ -41,4 +41,6 @@ public:
 	vector<string> GetNodeLabels();
 	vector<string> GetNeighbours(string label);
 	vector<Edge> GetConnectedEdges(string label);
+
+	bool ContainsNode(Node node);
 };
