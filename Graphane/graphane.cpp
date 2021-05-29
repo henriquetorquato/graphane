@@ -40,24 +40,19 @@ static string GetExecutingPath()
 	return path.substr(0, positions.at(positions.size() - 3));
 }
 
-int main()
+static void ExecuteDijkstra(Graph graph, string origin)
 {
-	string path(GetExecutingPath());
-	path.append(TARGET_FILE);
-
-    CsvGraphReader reader(path);
-    Graph graph = reader.ReadGraph();
-
-	// Dijkstra
-	cout << "Shortest path from `" << DIJKSTRA_ORIGIN << "` (Dijkstra):" << endl;
+	cout << "Shortest path from `" << origin << "` (Dijkstra):" << endl;
 
 	Dijkstra dijkstra(graph);
 	DijkstraResult shortest_paths = dijkstra.FindShortestPath(DIJKSTRA_ORIGIN);
 	dijkstra.DisplayResult(shortest_paths);
 
 	cout << "\n" << endl;
+}
 
-	// Prim
+static void ExecutePrim(Graph graph)
+{
 	cout << "Minimum spanning tree (Prim):" << endl;
 
 	if (Prim::IsGraphValid(graph))
@@ -72,33 +67,37 @@ int main()
 	}
 
 	cout << "\n" << endl;
+}
 
-	// Ford-Fulkerson
+static void ExecuteFordFulkerson(Graph graph, string source, string terminal)
+{
 	cout << "Maximum flow from `"
-		<< FORD_FULKERSON_SOURCE
+		<< source
 		<< "` to `"
-		<< FORD_FULKERSON_TERMINAL
+		<< terminal
 		<< "` (Ford-Fulkerson):" << endl;
 
-	if (FordFulkerson::IsGraphValid(graph, FORD_FULKERSON_SOURCE, FORD_FULKERSON_TERMINAL))
+	if (FordFulkerson::IsGraphValid(graph, source, terminal))
 	{
 		FordFulkerson ford_fulkerson(graph);
-		FordFulkersonResult maximum_flow = ford_fulkerson.FindMaximumFlow(FORD_FULKERSON_SOURCE, FORD_FULKERSON_TERMINAL);
+		FordFulkersonResult maximum_flow = ford_fulkerson.FindMaximumFlow(source, terminal);
 		ford_fulkerson.DisplayResult(maximum_flow);
 	}
 	else
 	{
 		cout << "Ford-Fulkerson's algorithm cannot process this graph with source `"
-			<< FORD_FULKERSON_SOURCE
+			<< source
 			<< "` and terminal `"
-			<< FORD_FULKERSON_TERMINAL
+			<< terminal
 			<< "`!"
 			<< endl;
 	}
 
 	cout << "\n" << endl;
+}
 
-	// Kosaraju
+static void ExecuteKosaraju(Graph graph)
+{
 	cout << "Strongly Connected Components (Kosaraju):" << endl;
 
 	Kosaraju kosaraju(graph);
@@ -106,4 +105,25 @@ int main()
 	kosaraju.DisplayResult(strongly_connected_components);
 
 	cout << "\n" << endl;
+}
+
+int main()
+{
+	string path(GetExecutingPath());
+	path.append(TARGET_FILE);
+
+    CsvGraphReader reader(path);
+    Graph graph = reader.ReadGraph();
+
+	// Dijkstra
+	ExecuteDijkstra(graph, DIJKSTRA_ORIGIN);
+
+	// Prim
+	ExecutePrim(graph);
+
+	// Ford-Fulkerson
+	ExecuteFordFulkerson(graph, FORD_FULKERSON_SOURCE, FORD_FULKERSON_TERMINAL);
+
+	// Kosaraju
+	ExecuteKosaraju(graph);
 }
