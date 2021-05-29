@@ -22,6 +22,8 @@
 
 #include "../Graphane/ford_fulkerson.h"
 
+#include "../Graphane/kosaraju.h"
+
 #include "../Graphane/string_utils.h"
 #include "../Graphane/graph_utils.h"
 
