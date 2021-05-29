@@ -2,6 +2,7 @@
 #include "graph_utils.h"
 #include <queue>
 #include <memory>
+#include <iostream>
 
 struct FlowCapacity
 {
@@ -95,7 +96,7 @@ bool BreadthFirstSeach(Graph graph, map<string, FlowCapacity> residual_graph, st
 	return false;
 }
 
-int FordFulkerson::FindMaximumFlow(string source, string terminal)
+FordFulkersonResult FordFulkerson::FindMaximumFlow(string source, string terminal)
 {
 	// Create residual graph
 	map<string, FlowCapacity> residual_graph = CreateResidualGraph(_graph);
@@ -168,7 +169,12 @@ int FordFulkerson::FindMaximumFlow(string source, string terminal)
 		max_flow += bottleneck_capacity;
 	}
 
-	return max_flow;
+	return { max_flow };
+}
+
+void FordFulkerson::DisplayResult(FordFulkersonResult result)
+{
+	cout << to_string(result.value) << endl;
 }
 
 bool FordFulkerson::IsGraphValid(Graph graph, string source, string terminal)

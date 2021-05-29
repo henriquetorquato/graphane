@@ -156,7 +156,6 @@
   <ItemGroup>
     <ClInclude Include="csv_graph_reader.h" />
     <ClInclude Include="dijkstra.h" />
-    <ClInclude Include="dijkstra_result.h" />
     <ClInclude Include="edge.h" />
     <ClInclude Include="ford_fulkerson.h" />
     <ClInclude Include="graph.h" />
@@ -165,7 +164,6 @@
     <ClInclude Include="kosaraju.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="prim.h" />
-    <ClInclude Include="prim_result.h" />
     <ClInclude Include="string_utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

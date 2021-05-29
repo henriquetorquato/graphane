@@ -80,12 +80,6 @@
     <ClInclude Include="prim.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="dijkstra_result.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="prim_result.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="graph_builder.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>

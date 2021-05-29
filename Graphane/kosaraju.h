@@ -3,6 +3,16 @@
 
 using namespace std;
 
+struct KosarajuComponents
+{
+	vector<string> nodes;
+};
+
+struct KosarajuResult
+{
+	vector<KosarajuComponents> components;
+};
+
 class Kosaraju
 {
 private:
@@ -14,5 +24,6 @@ public:
 		_graph = graph;
 	}
 
-	vector<vector<string>> FindStronglyConnectedComponents();
+	void DisplayResult(KosarajuResult result);
+	KosarajuResult FindStronglyConnectedComponents();
 };

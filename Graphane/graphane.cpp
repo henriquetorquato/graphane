@@ -13,7 +13,7 @@
 
 using namespace std;
 
-const string TARGET_FILE = "\\Tests\\test5_kosaraju.csv";
+const string TARGET_FILE = "\\Tests\\test3_directional.csv";
 const string DIRECTORY_SEPARATOR = "\\";
 
 const string DIJKSTRA_ORIGIN = "A";
@@ -40,50 +40,6 @@ static string GetExecutingPath()
 	return path.substr(0, positions.at(positions.size() - 3));
 }
 
-static void DisplayDijkstraShortestPaths(vector<DijkstraResult> shortest_paths)
-{
-	vector<DijkstraResult>::iterator it;
-	for (it = shortest_paths.begin(); it != shortest_paths.end(); it++)
-	{
-		DijkstraResult result(*it);
-
-		cout
-			<< result.origin << " -> " << result.destination
-			<< " | Path: " << ToString(result.path, DEFAULT_LIST_SEPARATOR)
-			<< " | Weight: " << result.weight
-			<< endl;
-	}
-}
-
-static void DisplayPrimMinimumSpanningTree(vector<PrimResult> minimum_spanning_tree)
-{
-	vector<string> edges;
-	vector<PrimResult>::iterator it;
-
-	for (it = minimum_spanning_tree.begin(); it != minimum_spanning_tree.end(); it++)
-	{
-		PrimResult result(*it);
-		edges.push_back(result.origin + result.destination);
-	}
-
-	cout << ToString(edges, DEFAULT_LIST_SEPARATOR) << endl;
-}
-
-static void DisplayFordFulkersonMaximumFlow(int maximum_flow)
-{
-	cout << to_string(maximum_flow) << endl;
-}
-
-static void DisplayKosarajuStronglyConnectedComponents(vector<vector<string>> components)
-{
-	vector<vector<string>>::iterator it;
-	for (it = components.begin(); it != components.end(); it++)
-	{
-		vector<string> component(*it);
-		cout << ToString(component, DEFAULT_LIST_SEPARATOR) << endl;
-	}
-}
-
 int main()
 {
 	string path(GetExecutingPath());
@@ -96,8 +52,8 @@ int main()
 	cout << "Shortest path from `" << DIJKSTRA_ORIGIN << "` (Dijkstra):" << endl;
 
 	Dijkstra dijkstra(graph);
-	vector<DijkstraResult> shortest_paths = dijkstra.FindShortestPath(DIJKSTRA_ORIGIN);
-	DisplayDijkstraShortestPaths(shortest_paths);
+	DijkstraResult shortest_paths = dijkstra.FindShortestPath(DIJKSTRA_ORIGIN);
+	dijkstra.DisplayResult(shortest_paths);
 
 	cout << "\n" << endl;
 
@@ -107,8 +63,8 @@ int main()
 	if (Prim::IsGraphValid(graph))
 	{
 		Prim prim(graph);
-		vector<PrimResult> minimum_spanning_tree = prim.FindMinimumSpanningTree();
-		DisplayPrimMinimumSpanningTree(minimum_spanning_tree);
+		PrimResult minimum_spanning_tree = prim.FindMinimumSpanningTree();
+		prim.DisplayResult(minimum_spanning_tree);
 	}
 	else
 	{
@@ -127,8 +83,8 @@ int main()
 	if (FordFulkerson::IsGraphValid(graph, FORD_FULKERSON_SOURCE, FORD_FULKERSON_TERMINAL))
 	{
 		FordFulkerson ford_fulkerson(graph);
-		int maximum_flow = ford_fulkerson.FindMaximumFlow(FORD_FULKERSON_SOURCE, FORD_FULKERSON_TERMINAL);
-		DisplayFordFulkersonMaximumFlow(maximum_flow);
+		FordFulkersonResult maximum_flow = ford_fulkerson.FindMaximumFlow(FORD_FULKERSON_SOURCE, FORD_FULKERSON_TERMINAL);
+		ford_fulkerson.DisplayResult(maximum_flow);
 	}
 	else
 	{
@@ -146,8 +102,8 @@ int main()
 	cout << "Strongly Connected Components (Kosaraju):" << endl;
 
 	Kosaraju kosaraju(graph);
-	vector<vector<string>> strongly_connected_components = kosaraju.FindStronglyConnectedComponents();
-	DisplayKosarajuStronglyConnectedComponents(strongly_connected_components);
+	KosarajuResult strongly_connected_components = kosaraju.FindStronglyConnectedComponents();
+	kosaraju.DisplayResult(strongly_connected_components);
 
 	cout << "\n" << endl;
 }

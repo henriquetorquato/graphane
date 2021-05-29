@@ -1,6 +1,13 @@
 #pragma once
 #include "graph.h"
 
+using namespace std;
+
+struct FordFulkersonResult
+{
+	int value;
+};
+
 class FordFulkerson
 {
 private:
@@ -16,5 +23,7 @@ public:
 	}
 
 	static bool IsGraphValid(Graph graph, string source, string terminal);
-	int FindMaximumFlow(string source, string terminal);
+
+	void DisplayResult(FordFulkersonResult result);
+	FordFulkersonResult FindMaximumFlow(string source, string terminal);
 };

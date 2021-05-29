@@ -1,7 +1,20 @@
 #pragma once
 #include "graph.h"
-#include "prim_result.h"
 #include <time.h>
+
+using namespace std;
+
+struct PrimPath
+{
+	string origin;
+	string destination;
+	string edge;
+};
+
+struct PrimResult
+{
+	vector<PrimPath> paths;
+};
 
 class Prim 
 {
@@ -27,5 +40,7 @@ public:
 	}
 
 	static bool IsGraphValid(Graph graph);
-	vector<PrimResult> FindMinimumSpanningTree();
+
+	void DisplayResult(PrimResult result);
+	PrimResult FindMinimumSpanningTree();
 };

@@ -1,4 +1,5 @@
 #include "dijkstra.h"
+#include "string_utils.h"
 #include <tuple>
 #include <sstream>
 #include <iostream>
@@ -65,7 +66,7 @@ bool ContainsNodeLabel(string node_label, vector<NodeWeight> nodes)
 	return FindNodeIndex(node_label, nodes) > -1;
 }
 
-DijkstraResult MapDijkstraResult(string origin_label, string destination_label, vector<NodeWeight> node_weights)
+ShortestPath MapDijkstraResult(string origin_label, string destination_label, vector<NodeWeight> node_weights)
 {
 	vector<string> path;
 	bool pathComplete = false;
@@ -93,14 +94,16 @@ DijkstraResult MapDijkstraResult(string origin_label, string destination_label, 
 	return { origin_label, destination_label, path, destination_weight };
 }
 
-vector<DijkstraResult> MapDijkstraResults(string origin_label, string destination_label, vector<NodeWeight> node_weights)
+DijkstraResult MapDijkstraResults(string origin_label, string destination_label, vector<NodeWeight> node_weights)
 {
 	if (destination_label != string())
 	{
-		return { MapDijkstraResult(origin_label, destination_label, node_weights) };
+		return {
+			{ MapDijkstraResult(origin_label, destination_label, node_weights) }
+		};
 	}
 
-	vector<DijkstraResult> results;
+	vector<ShortestPath> results;
 	vector<NodeWeight>::iterator node_i;
 
 	for (node_i = node_weights.begin(); node_i != node_weights.end(); node_i++)
@@ -113,14 +116,14 @@ vector<DijkstraResult> MapDijkstraResults(string origin_label, string destinatio
 			continue;
 		}
 		
-		DijkstraResult result = MapDijkstraResult(origin_label, node_weight.node, node_weights);
+		ShortestPath result = MapDijkstraResult(origin_label, node_weight.node, node_weights);
 		results.push_back(result);
 	}
 
-	return results;
+	return { results };
 }
 
-vector<DijkstraResult> Dijkstra::FindShortestPath(string origin_label, string destination_label)
+DijkstraResult Dijkstra::FindShortestPath(string origin_label, string destination_label)
 {
 	vector<NodeWeight> weights;
 	vector<NodeWeight> result;
@@ -172,4 +175,19 @@ vector<DijkstraResult> Dijkstra::FindShortestPath(string origin_label, string de
 	} while (!weights.empty() && !destination_found);
 
 	return MapDijkstraResults(origin_label, destination_label, result);
+}
+
+void Dijkstra::DisplayResult(DijkstraResult result)
+{
+	vector<ShortestPath>::iterator it;
+	for (it = result.paths.begin(); it != result.paths.end(); it++)
+	{
+		ShortestPath result(*it);
+
+		cout
+			<< result.origin << " -> " << result.destination
+			<< " | Path: " << ToString(result.path, DEFAULT_LIST_SEPARATOR)
+			<< " | Weight: " << result.weight
+			<< endl;
+	}
 }

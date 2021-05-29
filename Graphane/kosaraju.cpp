@@ -1,6 +1,8 @@
 #include "kosaraju.h"
 #include "graph_builder.h"
+#include "string_utils.h"
 #include <stack>
+#include <iostream>
 
 map<string, bool> createVisitedNodesMap(vector<string> nodes)
 {
@@ -79,9 +81,9 @@ void DepthFirstSearch(string node, Graph graph, map<string, bool>& visited_nodes
 	node_stack.push(node);
 }
 
-vector<vector<string>> Kosaraju::FindStronglyConnectedComponents()
+KosarajuResult Kosaraju::FindStronglyConnectedComponents()
 {
-	vector<vector<string>> components;
+	vector<KosarajuComponents> components;
 
 	stack<string> node_stack;
 
@@ -118,8 +120,18 @@ vector<vector<string>> Kosaraju::FindStronglyConnectedComponents()
 		stack<string> mock_stack;
 		DepthFirstSearch(node, transposed_graph, visited_nodes, component, mock_stack);
 
-		components.push_back(component);
+		components.push_back({ component });
 	} while (!node_stack.empty());
 
-	return components;
+	return { components };
+}
+
+void Kosaraju::DisplayResult(KosarajuResult result)
+{
+	vector<KosarajuComponents>::iterator it;
+	for (it = result.components.begin(); it != result.components.end(); it++)
+	{
+		KosarajuComponents component(*it);
+		cout << ToString(component.nodes, DEFAULT_LIST_SEPARATOR) << endl;
+	}
 }

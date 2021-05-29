@@ -1,8 +1,8 @@
 #include "prim.h"
 #include "string_utils.h"
+#include "graph_utils.h"
 #include <sstream>
 #include <iostream>
-#include "graph_utils.h"
 
 struct EdgePath
 {
@@ -116,9 +116,9 @@ void AddNodeAvailableEdges(Graph& graph, vector<EdgePath>& selected_edges, vecto
 	}
 }
 
-vector<PrimResult> MapMinimumSpanningTree(vector<EdgePath> selected_edges)
+PrimResult MapMinimumSpanningTree(vector<EdgePath> selected_edges)
 {
-	vector<PrimResult> results;
+	vector<PrimPath> results;
 	vector<EdgePath>::iterator edge_i;
 
 	for (edge_i = selected_edges.begin(); edge_i != selected_edges.end(); edge_i++)
@@ -128,10 +128,10 @@ vector<PrimResult> MapMinimumSpanningTree(vector<EdgePath> selected_edges)
 		results.push_back({ edge.origin, edge.destination, edge.label });
 	}
 
-	return results;
+	return { results };
 }
 
-vector<PrimResult> Prim::FindMinimumSpanningTree()
+PrimResult Prim::FindMinimumSpanningTree()
 {
 	// The selected subgraph
 	vector<EdgePath> selected_edges;
@@ -167,6 +167,20 @@ vector<PrimResult> Prim::FindMinimumSpanningTree()
 	} while (!pending_nodes.empty());
 
 	return MapMinimumSpanningTree(selected_edges);
+}
+
+void Prim::DisplayResult(PrimResult result)
+{
+	vector<string> edges;
+	vector<PrimPath>::iterator it;
+
+	for (it = result.paths.begin(); it != result.paths.end(); it++)
+	{
+		PrimPath result(*it);
+		edges.push_back(result.origin + result.destination);
+	}
+
+	cout << ToString(edges, DEFAULT_LIST_SEPARATOR) << endl;
 }
 
 bool Prim::IsGraphValid(Graph graph)

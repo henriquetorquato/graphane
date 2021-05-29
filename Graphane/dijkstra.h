@@ -1,8 +1,20 @@
 #pragma once
 #include "graph.h"
-#include "dijkstra_result.h"
 
 using namespace std;
+
+struct ShortestPath
+{
+	string origin;
+	string destination;
+	vector<string> path;
+	int weight;
+};
+
+struct DijkstraResult
+{
+	vector<ShortestPath> paths;
+};
 
 class Dijkstra
 {
@@ -15,5 +27,6 @@ public:
 		_graph = graph;
 	}
 
-	vector<DijkstraResult> FindShortestPath(string origin_label, string destination_label = string());
+	void DisplayResult(DijkstraResult result);
+	DijkstraResult FindShortestPath(string origin_label, string destination_label = string());
 };

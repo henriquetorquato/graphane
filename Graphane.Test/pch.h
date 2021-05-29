@@ -15,13 +15,8 @@
 #include "../Graphane/graph_builder.h"
 
 #include "../Graphane/dijkstra.h"
-#include "../Graphane/dijkstra_result.h"
-
 #include "../Graphane/prim.h"
-#include "../Graphane/prim_result.h"
-
 #include "../Graphane/ford_fulkerson.h"
-
 #include "../Graphane/kosaraju.h"
 
 #include "../Graphane/string_utils.h"
