@@ -62,6 +62,11 @@ public:
 		_type = type;
 	}
 
+	EdgeType GetType()
+	{
+		return _type;
+	}
+
 	bool ContainsNode(string label);
 	bool SignatureMatch(Edge edge);
 	string GetNeighbour(string label);

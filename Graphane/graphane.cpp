@@ -6,13 +6,14 @@
 #include "dijkstra.h"
 #include "prim.h"
 #include "ford_fulkerson.h"
+#include "kosaraju.h"
 
 #include <iostream>
 #include <Windows.h>
 
 using namespace std;
 
-const string TARGET_FILE = "\\Tests\\test4_max_flow_19.csv";
+const string TARGET_FILE = "\\Tests\\test5_kosaraju.csv";
 const string DIRECTORY_SEPARATOR = "\\";
 
 const string DIJKSTRA_ORIGIN = "A";
@@ -73,6 +74,16 @@ static void DisplayFordFulkersonMaximumFlow(int maximum_flow)
 	cout << to_string(maximum_flow) << endl;
 }
 
+static void DisplayKosarajuStronglyConnectedComponents(vector<vector<string>> components)
+{
+	vector<vector<string>>::iterator it;
+	for (it = components.begin(); it != components.end(); it++)
+	{
+		vector<string> component(*it);
+		cout << ToString(component, DEFAULT_LIST_SEPARATOR) << endl;
+	}
+}
+
 int main()
 {
 	string path(GetExecutingPath());
@@ -128,6 +139,15 @@ int main()
 			<< "`!"
 			<< endl;
 	}
+
+	cout << "\n" << endl;
+
+	// Kosaraju
+	cout << "Strongly Connected Components (Kosaraju):" << endl;
+
+	Kosaraju kosaraju(graph);
+	vector<vector<string>> strongly_connected_components = kosaraju.FindStronglyConnectedComponents();
+	DisplayKosarajuStronglyConnectedComponents(strongly_connected_components);
 
 	cout << "\n" << endl;
 }

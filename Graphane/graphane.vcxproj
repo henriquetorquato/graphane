@@ -149,6 +149,7 @@
     <ClCompile Include="graphane.cpp" />
     <ClCompile Include="graph_builder.cpp" />
     <ClCompile Include="graph_utils.cpp" />
+    <ClCompile Include="kosaraju.cpp" />
     <ClCompile Include="prim.cpp" />
     <ClCompile Include="string_utils.cpp" />
   </ItemGroup>
@@ -161,6 +162,7 @@
     <ClInclude Include="graph.h" />
     <ClInclude Include="graph_builder.h" />
     <ClInclude Include="graph_utils.h" />
+    <ClInclude Include="kosaraju.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="prim.h" />
     <ClInclude Include="prim_result.h" />
